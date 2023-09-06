@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kikaboni.project.repository.MemberRepository">
+	
+	<resultMap type="memberVO" id="memberMap">
+		<id property="memberId" column="memberId" />
+		<result property="memberId" column="memberId"/>
+		<result property="memberPwd" column="memberPwd"/>
+		<result property="memberName" column="memberName"/>
+		<result property="email" column="email"/>
+		<result property="phoneNumber" column="phoneNumber"/>		
+		<result property="address" column="address"/>
+		<result property="enabled" column="enabled"/>
+		<result property="regDate" column="regDate"/>
+		<result property="updateDate" column="updateDate"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+
+	<resultMap type="AuthVO" id="authMap">
+		<result property="memberId" column="memberId"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+
+
+	<select id="read" resultMap="memberMap">
+		select m.memberId, memberPwd, memberName, email, phoneNumber, address, enabled, regDate, updateDate, a.auth
+		  from kikaboni_member m left outer join kikaboni_member_auth a
+		on m.memberId = a.memberId where m.memberId = #{memberId}
+	</select>
+	
+	<insert id="insert">
+		insert into kikaboni_member(memberId, memberPwd, memberName, email, phoneNumber, address)
+		values(#{memberId}, #{memberPwd}, #{memberName}, #{email}, #{phoneNumber}, #{address})
+	</insert>
+
+	<update id="update">
+		update kikaboni_member set memberName = #{memberName}, email = #{email}, phoneNumber = #{phoneNumber},
+		address = #{address} where memberId = #{memberId}
+	</update>
+
+	<select id="selectById" resultType="memberVO">
+		select memberId, memberPwd, memberName, email, phoneNumber, address from kikaboni_member where memberId = #{memberId}
+	</select>
+
+	<delete id="delete">
+		delete from kikaboni_member where memberId = #{memberId}
+	</delete>
+
+	<update id="updatePassword">
+		update kikaboni_member set memberPwd = #{memberPwd} where memberId = #{memberId}
+	</update>
+
+
+
+</mapper>

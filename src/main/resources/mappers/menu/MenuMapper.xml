@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kikaboni.project.repository.MenuRepository">
+
+	
+	<select id="breadList" resultType="MenuVO">
+	
+		<![CDATA[
+		select * from
+			(select /*+INDEX_DESC(menu pk_menu)*/
+			ROWNUM as rn, mno, name, price, type, mcount
+			from menu where type like 'bread' and rownum <= #{maxRow})
+		where rn > #{minRow}
+		]]>
+	
+	</select>
+	
+	<select id="cakeList" resultType="MenuVO">
+		select * from menu where type like 'cake'
+	</select>
+	
+	<select id="coffeeList" resultType="MenuVO">
+		select * from menu where type like 'coffee'
+	</select>
+	
+	<select id="breadGet" resultType="MenuVO">
+		select * from menu where mno = #{mno}
+	</select>
+
+	<insert id="menuRegister">
+		insert into menu(mno, name, type, price, mcount) 
+		values(breadmno_seq.nextVAL, #{name}, #{type}, #{price}, #{mcount})
+	</insert>
+	
+	<insert id="insertSelectKey" keyColumn="mno" keyProperty="mno" useGeneratedKeys="true">
+		insert into menu(mno, name, type, price, mcount) 
+		values(breadmno_seq.nextVAL, #{name}, #{type}, #{price}, #{mcount})
+	</insert>
+	
+	<update id="menuUpdate">
+		update menu set price = #{price}, name = #{name} where mno = #{mno}
+	</update>
+
+	<delete id="menuDelete">
+		delete from menu where name = #{name}	
+	</delete>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(mno) from menu
+	</select>
+	
+
+</mapper>
