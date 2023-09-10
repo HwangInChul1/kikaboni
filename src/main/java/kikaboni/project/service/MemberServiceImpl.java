@@ -31,7 +31,14 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void join(MemberVO vo) {
 		vo.setMemberPwd(passwordEncoder.encode(vo.getMemberPwd())); 
-		AuthVO authvo = new AuthVO(vo.getMemberId(), "ROLE_MEMBER");
+		AuthVO authvo = new AuthVO();
+		
+		if(vo.getMemberId().equals("admin")) {
+			authvo = new AuthVO(vo.getMemberId(), "ROLE_ADMIN");
+		} else {
+			authvo = new AuthVO(vo.getMemberId(), "ROLE_MEMBER");
+		}
+		
 		memberRepository.insert(vo);
 		authRepository.insert(authvo);	
 	}

@@ -14,15 +14,15 @@ import kikaboni.project.service.MenuService;
 @RequestMapping("/menu")
 public class MenuModifyController {
 
-	@Autowired
-	MenuService menuService;
+//	@Autowired
+//	MenuService menuService;
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/menuUpdate")
-	public void menuUpdateForm(Long mno, Model model) {
-		MenuVO vo = menuService.breadGet(mno);
-		model.addAttribute("vo", vo);
-	}
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@GetMapping("/menuUpdate")
+//	public void menuUpdateForm(Long mno, Model model) {
+//		MenuVO vo = menuService.breadGet(mno);
+//		model.addAttribute("vo", vo);
+//	}
 	
 	
 	

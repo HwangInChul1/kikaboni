@@ -6,57 +6,116 @@
 
 	<insert id="insert">
 		insert into good_reply(rno, bno, reply, replyer)
-		values(seq_rno1.nextval, #{bno}, #{reply}, #{replyer}) 
+		values(seq_goodrno.nextval, #{bno}, #{reply}, #{replyer}) 
 	</insert>
+	<insert id="menuinsert">
+		insert into menu_reply(rno, bno, reply, replyer)
+		values(seq_menurno.nextval, #{bno}, #{reply}, #{replyer}) 
+	</insert>
+	<insert id="talkinsert">
+		insert into talk_reply(rno, bno, reply, replyer)
+		values(seq_talkrno.nextval, #{bno}, #{reply}, #{replyer}) 
+	</insert>
+	<insert id="eventinsert">
+		insert into event_reply(rno, bno, reply, replyer)
+		values(seq_eventrno.nextval, #{bno}, #{reply}, #{replyer}) 
+	</insert>
+
 
 	<select id="read" resultType="ReplyVO">
 		select * from good_reply where rno = #{rno}
 	</select>
+	<select id="menuread" resultType="ReplyVO">
+		select * from menu_reply where rno = #{rno}
+	</select>
+	<select id="talkread" resultType="ReplyVO">
+		select * from talk_reply where rno = #{rno}
+	</select>
+	<select id="eventread" resultType="ReplyVO">
+		select * from event_reply where rno = #{rno}
+	</select>
+	
 	
 	<update id="update">
 		update good_reply set reply = #{reply}, updateDate=sysdate where rno = #{rno}
 	</update>
+	<update id="menuupdate">
+		update menu_reply set reply = #{reply}, updateDate=sysdate where rno = #{rno}
+	</update>
+	<update id="talkupdate">
+		update talk_reply set reply = #{reply}, updateDate=sysdate where rno = #{rno}
+	</update>
+	<update id="eventupdate">
+		update event_reply set reply = #{reply}, updateDate=sysdate where rno = #{rno}
+	</update>
+	
 	
 	<delete id="delete">
 		delete from good_reply where rno = #{rno}
 	</delete>
+	<delete id="menudelete">
+		delete from menu_reply where rno = #{rno}
+	</delete>
+	<delete id="talkdelete">
+		delete from talk_reply where rno = #{rno}
+	</delete>
+	<delete id="eventdelete">
+		delete from event_reply where rno = #{rno}
+	</delete>
+	
 	
 	<select id="getList" resultType="ReplyVO">
-		
 		<![CDATA[
 		 select * from
-		(select /*+INDEX_DESC(good_reply pk_goodreply)*/
+		(select /*+INDEX_ASC(good_reply pk_goodreply)*/
 		    ROWNUM as rn, bno, rno, reply, replyer, replyDate, updateDate
 		from good_reply where bno = #{bno} and rownum <= #{criteria.maxRow})
 		where rn > #{criteria.minRow}
 		]]>
-		
 	</select>
+	
+	<select id="menuList" resultType="ReplyVO">
+		<![CDATA[
+		 select * from
+		(select /*+INDEX_ASC(menu_reply pk_menureply)*/
+		    ROWNUM as rn, bno, rno, reply, replyer, replyDate, updateDate
+		from menu_reply where bno = #{bno} and rownum <= #{criteria.maxRow})
+		where rn > #{criteria.minRow}
+		]]>
+	</select>
+	
+	<select id="talkList" resultType="ReplyVO">
+		<![CDATA[
+		 select * from
+		(select /*+INDEX_ASC(talk_reply pk_talkreply)*/
+		    ROWNUM as rn, bno, rno, reply, replyer, replyDate, updateDate
+		from talk_reply where bno = #{bno} and rownum <= #{criteria.maxRow})
+		where rn > #{criteria.minRow}
+		]]>
+	</select>
+	
+	<select id="eventList" resultType="ReplyVO">
+		<![CDATA[
+		 select * from
+		(select /*+INDEX_ASC(event_reply pk_eventreply)*/
+		    ROWNUM as rn, bno, rno, reply, replyer, replyDate, updateDate
+		from event_reply where bno = #{bno} and rownum <= #{criteria.maxRow})
+		where rn > #{criteria.minRow}
+		]]>
+	</select>
+	
 	
 	<select id="getReplyCount" resultType="int">
 		select count(rno) from good_reply where bno = #{bno}
 	</select>
-	
-	
-	<resultMap type="ReplyVO" id="ReplyMap">
-	    <id property="board_id" column="board_id"/>
-	    <result property="bno" column="bno"/>
-	    <result property="rno" column="rno"/>
-	    <result property="reply" column="reply"/>
-	    <collection property="myReplyList" resultMap="kindreplyMap"></collection>
-	</resultMap>
-	
-	<resultMap type="BoardKindVO" id="kindreplyMap">
-		<result property="board_id" column="board_id"/>
-		<result property="board_name" column="board_name"/>
-		<result property="board_content" column="board_content"/>
-		<result property="bno" column="bno"/>
-	</resultMap>
-
-	<!-- 마이페이지에 내가 쓴 글 -->
-	<select id="myReplyList" resultMap="ReplyMap">
-		select r.bno, rno, reply, m.board_name from good_reply r
-		left outer join kind_board m on r.board_id = m.board_id order by bno asc
+	<select id="menuReplyCount" resultType="int">
+		select count(rno) from menu_reply where bno = #{bno}
+	</select>
+	<select id="talkReplyCount" resultType="int">
+		select count(rno) from talk_reply where bno = #{bno}
+	</select>
+	<select id="eventReplyCount" resultType="int">
+		select count(rno) from event_reply where bno = #{bno}
 	</select>
 	
 </mapper>

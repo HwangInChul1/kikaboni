@@ -30,16 +30,26 @@ public class BoardRegisterController {
 	}
 	
 	// 게시판에서 글 작성으로 이동
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/menuregister")
 	public void menuregister(Model model, Long bno) { 
 		
 	}
 	
 	// 게시판에서 글 작성으로 이동
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/talkregister")
 	public void talkregister(Model model, Long bno) { 
 		
 	}
+	
+	// 게시판에서 글 작성으로 이동
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/eventregister")
+	public void eventregister(Model model, Long bno) { 
+		
+	}
+	
 	
 	// 글 작성 처리하는 부분
 	@PreAuthorize("isAuthenticated()")
@@ -74,6 +84,14 @@ public class BoardRegisterController {
 		return "redirect:/boardkind/CEOtalkList";
 	}
 	
-	
+	@PostMapping("/eventregister")
+	public String eventListRegister(BoardVO vo, RedirectAttributes rttr) {
+		
+		boardService.eventRegister(vo);
+		rttr.addFlashAttribute("result", vo.getBno());
+		rttr.addFlashAttribute("operation", "register");
+		
+		return "redirect:/boardkind/eventList";
+	}
 	
 }

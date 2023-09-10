@@ -37,6 +37,9 @@
 					<div>
 						<input type="hidden" name="mno" value="${menu.mno}">
 					</div>
+					<div class="form-group">
+	 					<input type="text" name="proId" placeholder="메뉴 id" class="form-control">
+	 				</div>
 			
 					<div class="form-group">
 	 					<input type="text" name="name" placeholder="메뉴 이름" class="form-control">
@@ -45,13 +48,14 @@
 	 				<div class="form-group">
 						<textarea rows="5" name="content" placeholder="메뉴 간단 설명" class="form-control" style="resize:none;"></textarea>
 					</div>
-	 -->
+	 -->			
 					<div class="form-group">
 						<input type="text" name="price" placeholder="메뉴 가격" class="form-control">
 					</div>
 					<div class="uploadDiv form-group">
 						<input type="file" name="uploadFile" multiple="multiple" class="form-control" style="height:50px;">
 					</div>
+					<input type="hidden" name="mcount">
 					<div class="uploadResultDiv form-group">
 						<ul class="list-group">
 							

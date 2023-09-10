@@ -15,7 +15,7 @@
 						<form:input path="memberId" class="form-control" placeholder="아이디를 입력해주세요."/>
 					</div>
 					<div>
-						<button type="button" class="btn btn-outline-primary form-control idCheck" style="font-color:white">아이디 중복확인</button>
+						<button type="button" class="btn btn-outline-primary form-control idCheck" style="font-color:white; width:100%;">아이디 중복확인</button>
 					</div>
 				</div>
 			
@@ -61,7 +61,6 @@ $('.idCheck').click(function(){
 		idCheckFlag = false;
 		return;
 	}
-	
 	if(memberId == ''){
 		alert('아이디를 입력하세요');
 		return;
@@ -92,6 +91,7 @@ $(function(){
 			return;
 		}
 		$('#memberVO').submit();
+		alert('회원가입이 완료되었습니다.')
 	})
 })
 

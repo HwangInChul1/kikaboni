@@ -61,6 +61,11 @@
 <script>
 
 $(function() {
+	
+	
+	let id = $('input[name="board_id"]').val();
+	console.log(id);
+	
 
 	let form = $('form');
 	
@@ -86,4 +91,4 @@ $(function() {
 
 
 </script>
-<script src="${ctxPath}/resources/js/board_upload.js"></script>
+<script src="${ctxPath}/resources/js/upload/goodboard_upload.js"></script>

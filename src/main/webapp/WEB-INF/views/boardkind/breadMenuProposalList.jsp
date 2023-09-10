@@ -53,7 +53,7 @@
 			</li>
 		</c:if>
 	</ul>
-	<form action="${ctxPath}/boardkind/breadGoodList" method="get" class="pageMove">
+	<form action="${ctxPath}/boardkind/breadMenuProposalList" method="get" class="pageMove">
 		<input type="hidden" name="pageNum" value="${page.criteria.pageNum}"/>
 		<input type="hidden" name="amount" value="${page.criteria.amount}"/>
 	</form>
@@ -141,7 +141,7 @@ $(function() {
 		  
 		 }
 		$('.fbno').append($('<input/>', {type:'hidden',name:'bno',value:getValue}))
-				  .attr('action','${ctxPath}/board/goodList/get')
+				  .attr('action','${ctxPath}/board/menuList/get')
 				  .attr('method','get')
 				  .submit();
 	})

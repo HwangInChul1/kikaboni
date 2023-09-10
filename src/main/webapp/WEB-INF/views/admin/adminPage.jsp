@@ -6,10 +6,10 @@
 	<div>
 		<ul class="list-group mt-3 mr-5" style="width:250px;">
 			<li class="list-group-item">
-				<a href="${ctxPath}/order/menuList">들어온 주문</a>
+				<a href="${ctxPath}/admin/menuList">들어온 주문</a>
 			</li>
 			<li class="list-group-item">
-				<a href="${ctxPath}/order/menuHistory">완료한 주문(주문 내역)</a>
+				<a href="${ctxPath}/admin/menuHistory">완료한 주문(주문 내역)</a>
 			</li>
 		</ul>
 	</div>

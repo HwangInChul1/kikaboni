@@ -4,10 +4,10 @@
 
 
 <div class="container d-flex justify-content-center">
-	<h1>키카보니에 오신걸 환영합니다.</h1>
+	<h1></h1>
 </div>
 
-<div class="container d-flex justify-content-center imgslide mb-2">
+<div class="container d-flex justify-content-center imgslide mb-2 mt-5">
          <img alt="이미지1" src="${ctxPath}/resources/images/image1.jpg" class="img">
          <img alt="이미지2" src="${ctxPath}/resources/images/image2.jpg" class="img">
          <img alt="이미지3" src="${ctxPath}/resources/images/image3.jpg" class="img">

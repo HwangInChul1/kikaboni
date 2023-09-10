@@ -19,6 +19,7 @@
 				</div>
 				<div class="card-body">
 				<form action="${ctxPath}/boardModify/menumodify" class="modifyForm" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<div class="form-group mb-3" style="height:auto; width:100%">
 						<div style="width:30%; float:left;">
 							<input type="text" value="${vo.bno}" name="bno" readonly="readonly" style="width:95%" class="form-control">
@@ -30,7 +31,7 @@
 					<div class="form-group">
 						<textarea rows="10" class="form-control mb-3" name="content">${vo.content}</textarea>
 
-						<input type="text" value="${vo.writer}" readonly="readonly" class="form-control mb-3">
+						<input type="text" name="writer" value="${vo.writer}" readonly="readonly" class="form-control mb-3">
 
 						<input type="text" value="<fmt:formatDate value="${vo.writeDate}" pattern="yyyy년MM월dd일 HH시mm분"/>" readonly="readonly" class="form-control mb-3">
 						
@@ -46,65 +47,55 @@
 			</div>
 		</div>	
 	</div>
-</div>
-
-<!-- 
-<div class="container text-center mt-3">
-	<div class="row">
-		<div class="col-12"> 
-			<input type="hidden">
-		</div>
+	
+	<div class="row mt-3 mb-5">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>첨부파일</h4>
+				</div>
+				<div class="card-body">
+					<div class="uploadDiv form-group">
+						<input type="file" name="uploadFile" class="form-control" multiple="multiple">
+					</div>
+					<div class="uploadResultDiv form-group">
+						<ul class="list-group"></ul>
+					</div>
+				</div>
+			</div>
+		</div>	
 	</div>
 </div>
--->
 
 
-
-
+<!-- Modal -->
+<div class="modal fade" id="showImage">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">원본 이미지보기</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
 
 
 <script>
 
-$(function() {
+	let form = $('.modifyForm');
+	let content = $('.modifyForm').find('[name="content"]');
+
+	function addCriteria(){
 	
-let form = $('.modifyForm');
-
-
-function addCriteria(){
-	form.append($('<input/>', {type:'hidden',name:'pageNum',value:'${criteria.pageNum}'}))
-		.append($('<input/>', {type:'hidden',name:'amount',value:'${criteria.amount}'}))
-}
-
-
-$('.modifyForm button').click(function() {
-	let operation = $(this).data('oper');  // oper값은 버튼 클릭할때 마다 가져옴
-	addCriteria();
-	
-	if(operation == 'list'){
-		form.empty();
-		addCriteria();
-		form.attr('method','get')
-			.attr('action','${ctxPath}/boardkind/breadMenuProposalList');
-		
-	} else if(operation == 'delete'){
-		form.attr('action','${ctxPath}/boardModify/menudelete');
-		
+		form.append($('<input/>', {type:'hidden',name:'pageNum',value:'${criteria.pageNum}'}))
+			.append($('<input/>', {type:'hidden',name:'amount',value:'${criteria.amount}'}))
 	}
-	
-	form.submit();
-	
-})
-
-
-
-
-	
-	
-	
-})
-
-
 
 </script>
 
+<script src="${ctxPath}/resources/js/board/menumodify.js"></script>
 

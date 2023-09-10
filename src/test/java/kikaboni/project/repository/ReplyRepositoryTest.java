@@ -45,12 +45,7 @@ public class ReplyRepositoryTest extends AppTest{
 		log.info(list);
 	}
 	
-	@Test
-	@Ignore
-	public void test3() {
-		List<ReplyVO> replyList = replyRepository.myReplyList();
-		log.info(replyList);
-	}
+
 	
 	
 		

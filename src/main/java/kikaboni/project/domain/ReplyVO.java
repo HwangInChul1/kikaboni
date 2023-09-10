@@ -30,5 +30,4 @@ public class ReplyVO {
 	@DateTimeFormat(pattern = "yyyyMMddHH")
 	private LocalDateTime updateDate;
 	
-	private List<BoardKindVO> myReplyList;
 }

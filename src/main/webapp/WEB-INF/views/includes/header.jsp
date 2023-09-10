@@ -143,8 +143,7 @@ style="border:1px solid; background-color:LightGray;">
         커뮤니티
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">공지사항</a>
-        <a class="dropdown-item" href="#">이벤트</a>
+        <a class="dropdown-item" href="${ctxPath}/boardkind/eventList">공지사항/이벤트</a>
       </div>
     </li>
     <li class="nav-item mr-5">

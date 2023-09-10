@@ -37,17 +37,29 @@ public class BoardListController {
 	
 	// 빵 메뉴 건의 게시판으로 이동
 	@GetMapping("/breadMenuProposalList")
-	public void MenuList(Model model) { 
-		List<BoardVO> list = boardService.menuList();
+	public void MenuList(Model model, Criteria criteria) { 
+		List<BoardVO> list = boardService.menuList(criteria);
 		model.addAttribute("list", list);
+		model.addAttribute("page", new Pagination(criteria, boardService.menutotalCount()));
 	}
 	
 	// 사장님께 한 마디 게시판으로 이동
 	@GetMapping("/CEOtalkList")
-	public void talkList(Model model) { 
-		List<BoardVO> list = boardService.talkList();
+	public void talkList(Model model, Criteria criteria) { 
+		List<BoardVO> list = boardService.talkList(criteria);
 		model.addAttribute("list", list);
+		model.addAttribute("page", new Pagination(criteria, boardService.talktotalCount()));
 	}
 
+	// 이벤트, 공지사항 게시판으로 이동
+	@GetMapping("/eventList")
+	public void eventList(Model model, Criteria criteria) { 
+		List<BoardVO> list = boardService.eventList(criteria);
+		model.addAttribute("list", list);
+		model.addAttribute("page", new Pagination(criteria, boardService.eventtotalCount()));
+	}
+	
+	
+	
 	
 }

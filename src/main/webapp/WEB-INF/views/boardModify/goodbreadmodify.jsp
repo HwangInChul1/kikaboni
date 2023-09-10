@@ -97,5 +97,5 @@
 
 </script>
 
-<script src="${ctxPath}/resources/js/modify.js"></script>
+<script src="${ctxPath}/resources/js/board/goodmodify.js"></script>
 

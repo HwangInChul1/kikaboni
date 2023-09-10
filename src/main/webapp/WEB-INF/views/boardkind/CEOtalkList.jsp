@@ -53,7 +53,7 @@
 			</li>
 		</c:if>
 	</ul>
-	<form action="${ctxPath}/boardkind/breadGoodList" method="get" class="pageMove">
+	<form action="${ctxPath}/boardkind/CEOtalkList" method="get" class="pageMove">
 		<input type="hidden" name="pageNum" value="${page.criteria.pageNum}"/>
 		<input type="hidden" name="amount" value="${page.criteria.amount}"/>
 	</form>
@@ -134,7 +134,7 @@ $(function() {
 		let getValue = $(this).attr('href');
 		$('.fbno').find('[name="bno"]').remove(); // 기존 bno input 제거
 		$('.fbno').append($('<input/>', {type:'hidden',name:'bno',value:getValue}))
-				  .attr('action','${ctxPath}/board/goodList/get')
+				  .attr('action','${ctxPath}/board/talkList/get')
 				  .attr('method','get')
 				  .submit();
 	})

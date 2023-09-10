@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp" %>
 
+<div class="container d-flex justify-content-center mt-3">
+	<h1>내가 쓴 글</h1>
+</div>
 
 <div class="d-flex justify-content-center p-2">
 	<div>
@@ -16,7 +19,7 @@
 				<a href="${ctxPath}/member/mytext">내가 쓴 글</a>
 			</li>
 			<li class="list-group-item">
-				<a href="${ctxPath}/order/myMenuList">나의 주문 내역</a>
+				<a href="${ctxPath}/member/myMenuList">나의 주문 내역</a>
 			</li>
 		</ul>
 	</div>
@@ -31,18 +34,22 @@
 						<td>내가 쓴 글</td>						
 					</tr>
 				</thead>
-				<c:if test="${not empty text}">
-					<c:forEach items="${text}" var="t">
+				<c:if test="${not empty good}">
+					<c:forEach items="${good}" var="g">
 						<tbody>
 							<tr>
 								<td>
-									<c:forEach items="${t.myTextList}" var="kind">
-			                     		 ${kind.board_name}<br/>
+									<c:forEach items="${g.myTextList}" var="good">
+			                     		 ${good.board_name}<br/>
 			                    	</c:forEach>
+
 								</td>
-								<td>${t.bno}</td>
-								<td>${t.title}</td>
-								<td>${t.content}</td>
+								<td>${g.bno}</td>
+
+								<td>${g.title}</td>
+
+								<td>${g.content}</td>
+
 							</tr>
 						</tbody>
 					</c:forEach>

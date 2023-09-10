@@ -31,17 +31,17 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public List<MenuVO> cakeList() {
+	public List<MenuVO> cakeList(Criteria criteria) {
 		
-		List<MenuVO> list = menuRepository.cakeList();
+		List<MenuVO> list = menuRepository.cakeList(criteria);
 		
 		return list;
 	}
 
 	@Override
-	public List<MenuVO> coffeeList() {
+	public List<MenuVO> coffeeList(Criteria criteria) {
 		
-		List<MenuVO> list = menuRepository.coffeeList();
+		List<MenuVO> list = menuRepository.coffeeList(criteria);
 		
 		return list;
 	}
@@ -59,6 +59,13 @@ public class MenuServiceImpl implements MenuService {
 			});
 		}
 	}
+	
+	@Override
+	public Integer insertSelectKey(MenuVO vo) {	
+		
+		return menuRepository.insertSelectKey(vo);
+	}
+	
 
 	@Override
 	public int menuUpdate(MenuVO vo) {
@@ -66,8 +73,8 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public int menuDelete(String name) {
-		return menuRepository.menuDelete(name);
+	public int menuDelete(Long mno) {
+		return menuRepository.menuDelete(mno);
 	}
 
 	@Override
@@ -91,5 +98,9 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 
+
+
 }
+
+
 

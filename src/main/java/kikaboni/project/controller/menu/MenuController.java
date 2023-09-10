@@ -1,5 +1,6 @@
 package kikaboni.project.controller.menu;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,85 +68,88 @@ public class MenuController {
 //		return "redirect:/menu/orderMenu_bread";
 //	}
 	
-	// 빵 메뉴 조회 
-	@GetMapping("/goodBreadGet")
-	public String breadGet(Long mno, Model model) {
+//	// 빵 메뉴 조회 
+//	@GetMapping("/goodBreadGet")
+//	public String breadGet(Long mno, Model model) {
+//			
+//		MenuVO vo = menuService.breadGet(mno);
+//		model.addAttribute("vo", vo);
+//			
+//		return "menu/breadMenuGet";
+//	}
 		
-		MenuVO vo = menuService.breadGet(mno);
-		model.addAttribute("vo", vo);
 		
-		return "menu/breadMenuGet";
-	}
-	
-	
 	@GetMapping("/orderMenu_bread") // 빵 메뉴 화면으로 이동(이동할떄 mno를 가지고 가야한다?)
 	public String menuBread(Model model, Criteria criteria) {
-	
-		List<MenuVO> list = menuService.breadList(criteria); // 게시물 목록을 가져옴
 		
+		List<MenuVO> list = menuService.breadList(criteria); // 게시물 목록을 가져옴
+		log.info(list);
+			
 		for(MenuVO m : list) {
 			Long mno = m.getMno();
 			List<MenuAttachVO> menuAttachList = menuService.menuAttachList(mno);
 			m.setAttachList(menuAttachList);
 		}
-		
+			
 		model.addAttribute("list", list);
 		model.addAttribute("page", new Pagination(criteria, menuService.getTotalCount()));
 		
 		return "menu/orderMenu_bread";
 	}
-	
-	@GetMapping("/orderMenu_cake") // 케이크 메뉴 화면으로 이동
-	public String menuCake(Model model) {
-	
-		List<MenuVO> list = menuService.cakeList();
-		model.addAttribute("list", list);
 		
+	@GetMapping("/orderMenu_cake") // 케이크 메뉴 화면으로 이동
+	public String menuCake(Model model, Criteria criteria) {
+		
+		List<MenuVO> list = menuService.cakeList(criteria);
+		model.addAttribute("list", list);
+			
 		return "menu/orderMenu_cake";
 	}
-	
-	@GetMapping("/orderMenu_coffee") // 커피 메뉴 화면으로 이동
-	public String menuCoffee(Model model) {
-	
-		List<MenuVO> list = menuService.coffeeList();
-		model.addAttribute("list", list);
 		
+	@GetMapping("/orderMenu_coffee") // 커피 메뉴 화면으로 이동
+	public String menuCoffee(Model model, Criteria criteria) {
+		
+		List<MenuVO> list = menuService.coffeeList(criteria);
+		model.addAttribute("list", list);
+			
 		return "menu/orderMenu_coffee";
 	}
 
 	@PostMapping("/breadOrder") // 빵 등록 화면에서 등록하면 주문메뉴로 이동
 	public String menuMove(MenuVO vo, RedirectAttributes rttr){
-		
+			
 		log.info(vo.getAttachList());
-		
+			
 		menuService.menuRegister(vo);
 		log.info(vo);
 		return "redirect:/menu/orderMenu_bread";
 	}
-	
+		
 	@PostMapping("/breadSubmit")
 	public String menuOrder(MenuVO vo, Model model) {
-		
-		
-		
+			
+			
+			
 		return "/menu/breadSubmit";
 	}
 	
-	
-	
+		
+		
 	@GetMapping("/menuAttachList")
 	@ResponseBody
 	public ResponseEntity<List<MenuAttachVO>> menuAttachList(Long mno){
 		return new ResponseEntity<>(menuService.menuAttachList(mno),HttpStatus.OK);
 	}
-	
+		
 	@GetMapping("/menuAttachFileInfo")
 	@ResponseBody
 	public ResponseEntity<MenuAttachVO> menuAttach(String uuid){
 		return new ResponseEntity<>(menuService.menuAttach(uuid), HttpStatus.OK);
 	}
-	
+		
 }
+
+
 
 
 

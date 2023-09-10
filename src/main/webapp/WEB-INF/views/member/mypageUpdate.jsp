@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp" %>
 
+<div class="container d-flex justify-content-center mt-3">
+	<h1>회원정보 변경</h1>
+</div>
+
 <div class="d-flex justify-content-center p-2">
 	<div>
 		<ul class="list-group mt-3 mr-5" style="width:200px;">
@@ -15,7 +19,7 @@
 				<a href="${ctxPath}/member/mytext">내가 쓴 글</a>
 			</li>
 			<li class="list-group-item">
-				<a href="${ctxPath}/order/myMenuList">나의 주문 내역</a>
+				<a href="${ctxPath}/member/myMenuList">나의 주문 내역</a>
 			</li>
 		</ul>
 	</div>

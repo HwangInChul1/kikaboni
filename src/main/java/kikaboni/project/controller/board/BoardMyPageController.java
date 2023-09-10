@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -25,19 +26,25 @@ public class BoardMyPageController {
 	ReplyService replyService;
 	
 	// 수정
+	@Transactional
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
 	@GetMapping("/member/mytext")
 	public String myPageText(Model model, Principal principal, Criteria criteria) {
 		String memberId = principal.getName();
-		List<BoardVO> textlist = boardService.myTextlist(memberId, criteria);
-		model.addAttribute("text", textlist);
+		List<BoardVO> goodlist = boardService.myTextlist(memberId, criteria);
+//		List<BoardVO> menulist = boardService.myMenuTextlist(memberId, criteria);
+//		List<BoardVO> talklist = boardService.mytalkTextlist(memberId, criteria);
+//		List<BoardVO> eventlist = boardService.myeventTextlist(memberId, criteria);
+		model.addAttribute("good", goodlist);
+//		model.addAttribute("menu", menulist);
+//		model.addAttribute("talk", talklist);
+//		model.addAttribute("event", eventlist);
+		
 		model.addAttribute("page", new Pagination(criteria, boardService.totalCount()));
 		return "member/mytext";
 	}
 	
-	@GetMapping("/member/myreply")
-	public void myReplyList(Model model) {
-		List<ReplyVO> replyList = replyService.myReplyList();
-		model.addAttribute("reply", replyList);
-	}
+	
+	
+
 }

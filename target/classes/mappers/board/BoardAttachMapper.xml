@@ -8,19 +8,60 @@
 		insert into board_attach(uuid, uploadPath, fileName, fileType, bno)
 		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno})
 	</insert>
+	<insert id="menuinsert">
+		insert into menuboard_attach(uuid, uploadPath, fileName, fileType, bno)
+		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno})
+	</insert>
+	<insert id="talkinsert">
+		insert into talkboard_attach(uuid, uploadPath, fileName, fileType, bno)
+		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno})
+	</insert>
+	<insert id="eventinsert">
+		insert into eventboard_attach(uuid, uploadPath, fileName, fileType, bno)
+		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno})
+	</insert>
+
 
 	<delete id="delete">
 		delete from board_attach where uuid = #{uuid}
 	</delete>
+	<delete id="menudelete">
+		delete from menuboard_attach where uuid = #{uuid}
+	</delete>
+	<delete id="talkdelete">
+		delete from talkboard_attach where uuid = #{uuid}
+	</delete>
+	<delete id="eventdelete">
+		delete from eventboard_attach where uuid = #{uuid}
+	</delete>
+
 
 	<select id="selectByBno" resultType="BoardAttachVO">
 		select * from board_attach where bno = #{bno}
 	</select>
+	<select id="menuselectByBno" resultType="BoardAttachVO">
+		select * from menuboard_attach where bno = #{bno}
+	</select>
+	<select id="talkselectByBno" resultType="BoardAttachVO">
+		select * from talkboard_attach where bno = #{bno}
+	</select>
+	<select id="eventselectByBno" resultType="BoardAttachVO">
+		select * from eventboard_attach where bno = #{bno}
+	</select>
+	
 	
 	<select id="selectByUuid" resultType="BoardAttachVO">
 		select * from board_attach where uuid = #{uuid}
 	</select>
-
+	<select id="menuselectByUuid" resultType="BoardAttachVO">
+		select * from menuboard_attach where uuid = #{uuid}
+	</select>
+	<select id="talkselectByUuid" resultType="BoardAttachVO">
+		select * from talkboard_attach where uuid = #{uuid}
+	</select>
+	<select id="eventselectByUuid" resultType="BoardAttachVO">
+		select * from eventboard_attach where uuid = #{uuid}
+	</select>
 
 
 </mapper>

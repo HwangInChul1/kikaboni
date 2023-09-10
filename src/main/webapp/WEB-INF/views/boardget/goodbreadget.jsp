@@ -10,7 +10,7 @@
 		  	</div>
 	  	</div>
   	</div>
-
+	<input type="hidden" value="${vo.board_id}" name="id">
 	<div class="row">
 		<div class="col-12">
 			<div class="card"> 
@@ -156,6 +156,9 @@
 
 $(function() {
 	
+	let id = $('input[name="id"]').val();
+	console.log(id);
+	
 	let form = $('form');
 	
 	function pageList(){
@@ -185,9 +188,9 @@ $(function() {
 
 </script>
 
-<script src="${ctxPath}/resources/js/get.js"></script>
-<script src="${ctxPath}/resources/js/replyService.js"></script>
-<script src="${ctxPath}/resources/js/reply.js"></script>
+<script src="${ctxPath}/resources/js/board/goodget.js"></script>
+<script src="${ctxPath}/resources/js/reply/goodReplyService.js"></script>
+<script src="${ctxPath}/resources/js/reply/goodReply.js"></script>
 
 
 

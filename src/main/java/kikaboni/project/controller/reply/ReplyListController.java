@@ -28,7 +28,7 @@ public class ReplyListController {
 	@Autowired
 	private ReplyService replyService;
 	
-	// 게시글 작성 컨트롤러
+	// 게시글 작성 컨트롤러(빵 추천)
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/new")
 	public ResponseEntity<String> newReply(@RequestBody ReplyVO vo){
@@ -38,27 +38,129 @@ public class ReplyListController {
 		return result == 1? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	// 게시글 작성 컨트롤러(메뉴 건의)
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/newMenu")
+	public ResponseEntity<String> newmenuReply(@RequestBody ReplyVO vo){
+		
+		int result = replyService.menuinsert(vo);
+		
+		return result == 1? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	// 게시글 작성 컨트롤러
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/newTalk")
+	public ResponseEntity<String> newtalkReply(@RequestBody ReplyVO vo){
+		
+		int result = replyService.talkinsert(vo);
+		
+		return result == 1? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	// 게시글 작성 컨트롤러
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/newEvent")
+	public ResponseEntity<String> newEventReply(@RequestBody ReplyVO vo){
+		
+		int result = replyService.eventinsert(vo);
+		
+		return result == 1? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	
 	
 	// 게시글 조회 컨트롤러
-	@GetMapping("/{rno}")
+	@GetMapping("/commend/{rno}")
 	public ResponseEntity<ReplyVO> getreply(@PathVariable Long rno){
 		ReplyVO read = replyService.read(rno);
 		return new ResponseEntity<ReplyVO>(read, HttpStatus.OK); // 성공응답과 동시에 댓글을 반환
 	}
+	// 게시글 조회 컨트롤러
+	@GetMapping("/menu/{rno}")
+	public ResponseEntity<ReplyVO> menureply(@PathVariable Long rno){
+		ReplyVO read = replyService.menuread(rno);
+		return new ResponseEntity<ReplyVO>(read, HttpStatus.OK); // 성공응답과 동시에 댓글을 반환
+	}
+	// 게시글 조회 컨트롤러
+	@GetMapping("/talk/{rno}")
+	public ResponseEntity<ReplyVO> talkreply(@PathVariable Long rno){
+		ReplyVO read = replyService.talkread(rno);
+		return new ResponseEntity<ReplyVO>(read, HttpStatus.OK); // 성공응답과 동시에 댓글을 반환
+	}
+	// 게시글 조회 컨트롤러
+	@GetMapping("/event/{rno}")
+	public ResponseEntity<ReplyVO> eventreply(@PathVariable Long rno){
+		ReplyVO read = replyService.eventread(rno);
+		return new ResponseEntity<ReplyVO>(read, HttpStatus.OK); // 성공응답과 동시에 댓글을 반환
+	}
+	
+	
 	
 	// 게시물에 따른 게시글 조회 컨트롤러
-	@GetMapping("/pages/{page}/{bno}")
+	@GetMapping("/commendPages/{page}/{bno}")
 	public ResponseEntity<ReplyPageDTO> getList(
 			@PathVariable Long bno, @PathVariable int page){
 		Criteria criteria = new Criteria(page, 5);
 		return new ResponseEntity<>(replyService.getList(bno, criteria), HttpStatus.OK);
 	}
+	// 게시물에 따른 게시글 조회 컨트롤러
+	@GetMapping("/menuPages/{page}/{bno}")
+	public ResponseEntity<ReplyPageDTO> menuList(
+			@PathVariable Long bno, @PathVariable int page){
+		Criteria criteria = new Criteria(page, 5);
+		return new ResponseEntity<>(replyService.menuList(bno, criteria), HttpStatus.OK);
+	}
+	// 게시물에 따른 게시글 조회 컨트롤러
+	@GetMapping("/talkPages/{page}/{bno}")
+	public ResponseEntity<ReplyPageDTO> talkList(
+			@PathVariable Long bno, @PathVariable int page){
+		Criteria criteria = new Criteria(page, 5);
+		return new ResponseEntity<>(replyService.talkList(bno, criteria), HttpStatus.OK);
+	}
+	// 게시물에 따른 게시글 조회 컨트롤러
+	@GetMapping("/eventPages/{page}/{bno}")
+	public ResponseEntity<ReplyPageDTO> eventList(
+			@PathVariable Long bno, @PathVariable int page){
+		Criteria criteria = new Criteria(page, 5);
+		return new ResponseEntity<>(replyService.eventList(bno, criteria), HttpStatus.OK);
+	}
+	
+	
 	
 	// 게시글 수정 컨트롤러
 	@PreAuthorize("isAuthenticated()")
-	@PutMapping("/{rno}")
+	@PutMapping("/commend/{rno}")
 	public ResponseEntity<String> replyUpdate(@RequestBody ReplyVO vo, @PathVariable Long rno){
 		int result = replyService.update(vo);
+		
+		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);		
+	}
+	// 게시글 수정 컨트롤러
+	@PreAuthorize("isAuthenticated()")
+	@PutMapping("/menu/{rno}")
+	public ResponseEntity<String> replyMenuUpdate(@RequestBody ReplyVO vo, @PathVariable Long rno){
+		int result = replyService.menuupdate(vo);
+		
+		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);		
+	}
+	// 게시글 수정 컨트롤러
+	@PreAuthorize("isAuthenticated()")
+	@PutMapping("/talk/{rno}")
+	public ResponseEntity<String> replytalkUpdate(@RequestBody ReplyVO vo, @PathVariable Long rno){
+		int result = replyService.talkupdate(vo);
+		
+		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);		
+	}
+	// 게시글 수정 컨트롤러
+	@PreAuthorize("isAuthenticated()")
+	@PutMapping("/event/{rno}")
+	public ResponseEntity<String> replyEventUpdate(@RequestBody ReplyVO vo, @PathVariable Long rno){
+		int result = replyService.eventupdate(vo);
 		
 		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);		
@@ -67,10 +169,40 @@ public class ReplyListController {
 	
 	// 게시글 삭제 컨트롤러
 	@PreAuthorize("isAuthenticated()")
-	@DeleteMapping("/{rno}")
+	@DeleteMapping("/commend/{rno}")
 	public ResponseEntity<String> replyDelete(@PathVariable Long rno){		
 		
 		int result = replyService.delete(rno);
+		
+		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	// 게시글 삭제 컨트롤러
+	@PreAuthorize("isAuthenticated()")
+	@DeleteMapping("/menu/{rno}")
+	public ResponseEntity<String> replyMenuDelete(@PathVariable Long rno){		
+		
+		int result = replyService.menudelete(rno);
+		
+		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	// 게시글 삭제 컨트롤러
+	@PreAuthorize("isAuthenticated()")
+	@DeleteMapping("/talk/{rno}")
+	public ResponseEntity<String> replyTalkDelete(@PathVariable Long rno){		
+		
+		int result = replyService.talkdelete(rno);
+		
+		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	// 게시글 삭제 컨트롤러
+	@PreAuthorize("isAuthenticated()")
+	@DeleteMapping("/event/{rno}")
+	public ResponseEntity<String> replyEventDelete(@PathVariable Long rno){		
+		
+		int result = replyService.eventdelete(rno);
 		
 		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

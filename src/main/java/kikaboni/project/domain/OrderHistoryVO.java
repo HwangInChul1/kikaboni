@@ -16,8 +16,13 @@ import lombok.ToString;
 @NoArgsConstructor
 public class OrderHistoryVO {
 
-	private Long ono;
-	private String memberId;
-	private Date orderDate;
-	private List<OrderMenuVO> menuList;
+	private Long ono; // 주문에 따른 테이블 번호
+	private String memberId; // 회원id
+	private Date orderDate; // 주문 날짜
+	private Long proCount; // 주문 개수
+	private Long mno; // 상품 번호
+	
+	private MenuVO menu;
+	private List<MenuVO> menuList;
+	
 }

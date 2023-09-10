@@ -7,6 +7,18 @@
 	<update id="updateReplyCnt">
 		update good_board set replyCnt = replyCnt + #{amount} where bno = #{bno}
 	</update>
+	
+	<update id="updatemenuReplyCnt">
+		update menu_board set replyCnt = replyCnt + #{amount} where bno = #{bno}
+	</update>
+	
+	<update id="updatetalkReplyCnt">
+		update talk_board set replyCnt = replyCnt + #{amount} where bno = #{bno}
+	</update>
+	
+	<update id="updateEventReplyCnt">
+		update event_board set replyCnt = replyCnt + #{amount} where bno = #{bno}
+	</update>
 
 
 	<!-- 게시판 전체 게시물 조회 -->
@@ -23,13 +35,38 @@
 	
 	<!-- 빵 메뉴 건의 게시판 전체 게시물 조회 -->
 	<select id="menuList" resultType="BoardVO">
-		select * from menu_board order by bno asc
+		<![CDATA[
+		 select * from
+		(select /*+INDEX_DESC(menu_board pk_menuboard)*/
+		    ROWNUM as rn, bno, title, content, writer, replyCnt, writeDate, updateDate, board_id
+		from menu_board where rownum <= #{maxRow})
+		where rn > #{minRow}
+		]]>
 	</select>
 	
 	<!-- 사장님과 대화 전체 게시물 조회 -->
 	<select id="talkList" resultType="BoardVO">
-		select * from talk_board order by bno asc
+		<![CDATA[
+		 select * from
+		(select /*+INDEX_DESC(talk_board pk_talkboard)*/
+		    ROWNUM as rn, bno, title, content, writer, replyCnt, writeDate, updateDate, board_id
+		from talk_board where rownum <= #{maxRow})
+		where rn > #{minRow}
+		]]>
 	</select>
+	
+	<!-- 이벤트,공지사항 전체 게시물 조회 -->
+	<select id="eventList" resultType="BoardVO">
+		<![CDATA[
+		 select * from
+		(select /*+INDEX_DESC(event_board pk_eventboard)*/
+		    ROWNUM as rn, bno, title, content, writer, replyCnt, writeDate, updateDate, board_id
+		from event_board where rownum <= #{maxRow})
+		where rn > #{minRow}
+		]]>
+	</select>
+	
+	
 	
 	
 	<!-- 게시판 단일 게시물 조회 -->
@@ -46,28 +83,52 @@
 		select * from talk_board where bno = #{bno}
 	</select>
 	
+	<select id="eventGet" resultType="BoardVO">
+		select * from event_board where bno = #{bno}
+	</select>
 	
-	<!-- 게시물 작성 -->	
+	
+	<!-- 게시물 작성(키값 반환) -->	
 	<insert id="insertSelectKey" keyColumn="bno" keyProperty="bno" useGeneratedKeys="true">
 		insert into good_board(bno, title, content, writer, board_id, memberId) 
-		values(bno_seq1.nextVAL, #{title}, #{content}, #{writer}, #{board_id}, #{memberId})
+		values(bno_goodseq.nextVAL, #{title}, #{content}, #{writer}, #{board_id}, #{memberId})
+	</insert>
+	
+	<insert id="insertMenuSelectKey" keyColumn="bno" keyProperty="bno" useGeneratedKeys="true">
+		insert into menu_board(bno, title, content, writer, board_id, memberId) 
+		values(bno_menuseq.nextVAL, #{title}, #{content}, #{writer}, #{board_id}, #{memberId})
+	</insert>
+	
+	<insert id="insertTalkSelectKey" keyColumn="bno" keyProperty="bno" useGeneratedKeys="true">
+		insert into talk_board(bno, title, content, writer, board_id, memberId) 
+		values(bno_talkseq.nextVAL, #{title}, #{content}, #{writer}, #{board_id}, #{memberId})
+	</insert>
+	
+	<insert id="insertEventSelectKey" keyColumn="bno" keyProperty="bno" useGeneratedKeys="true">
+		insert into event_board(bno, title, content, writer, board_id, memberId) 
+		values(bno_eventseq.nextVAL, #{title}, #{content}, #{writer}, #{board_id}, #{memberId})
 	</insert>
 	
 	
-	
+	<!-- 게시물 작성 -->
 	<insert id="commendRegister">
 		insert into good_board(bno, title, content, writer) 
-		values(bno_seq1.nextVAL, #{title}, #{content}, #{writer})
+		values(bno_goodseq.nextVAL, #{title}, #{content}, #{writer})
 	</insert>
 
 	<insert id="menuRegister">
 		insert into menu_board(bno, title, content, writer) 
-		values(bno_seq2.nextVAL, #{title}, #{content}, #{writer})
+		values(bno_menuseq.nextVAL, #{title}, #{content}, #{writer})
 	</insert>
 	
 	<insert id="talkRegister">
 		insert into talk_board(bno, title, content, writer) 
-		values(bno_seq3.nextVAL, #{title}, #{content}, #{writer})
+		values(bno_talkseq.nextVAL, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<insert id="eventRegister">
+		insert into event_board(bno, title, content, writer) 
+		values(bno_eventseq.nextVAL, #{title}, #{content}, #{writer})
 	</insert>
 	
 	
@@ -83,6 +144,11 @@
 	<update id="talkUpdate">
 		update talk_board set title=#{title}, content=#{content} where bno=#{bno}
 	</update>
+	
+	<update id="eventUpdate">
+		update event_board set title=#{title}, content=#{content} where bno=#{bno}
+	</update>
+	
 
 	<!-- 게시물 삭제 -->
 	<delete id="commendDelete">
@@ -97,10 +163,28 @@
 		delete from talk_board where bno=#{bno}
 	</delete>
 	
+	<delete id="eventDelete">
+		delete from event_board where bno=#{bno}
+	</delete>
+	
+	
 	<!-- 전체 게시물 수 -->
 	<select id="totalCount" resultType="int">
 	 select count(bno) from good_board
 	</select>
+	
+	<select id="menutotalCount" resultType="int">
+	 select count(bno) from menu_board
+	</select>
+	
+	<select id="talktotalCount" resultType="int">
+	 select count(bno) from talk_board
+	</select>
+	
+	<select id="eventtotalCount" resultType="int">
+	 select count(bno) from event_board
+	</select>
+
 
 	<resultMap type="BoardVO" id="BoardMap">
 	    <id property="board_id" column="board_id"/>
@@ -116,15 +200,47 @@
 		<result property="board_content" column="board_content"/>
 	</resultMap>
 
+
 	<!-- 마이페이지에 내가 쓴 글 -->
 	<select id="myTextlist" resultMap="BoardMap">
 		<![CDATA[
 		select * from
 		(select /*+INDEX_DESC(good_board pk_goodboard)*/ 
-		ROWNUM as rn, b.bno, title, content, m.board_name from good_board b
-		left outer join kind_board m on b.board_id = m.board_id 
-		where b.memberId = #{memberId} and rownum <= #{criteria.maxRow}) where rn > #{criteria.minRow}
+		ROWNUM as rn, g.bno, title, content, k.board_name from good_board g
+		left outer join kind_board k on g.board_id = k.board_id 
+		where g.memberId = #{memberId} and rownum <= #{criteria.maxRow}) where rn > #{criteria.minRow}
 		]]>
 	</select>
+	
+	<select id="myMenuTextlist" resultMap="BoardMap">
+		<![CDATA[
+		select * from
+		(select /*+INDEX_DESC(menu_board pk_menuboard)*/ 
+		ROWNUM as rn, m.bno, title, content, k.board_name from menu_board m
+		left outer join kind_board k on m.board_id = k.board_id 
+		where k.memberId = #{memberId} and rownum <= #{criteria.maxRow}) where rn > #{criteria.minRow}
+		]]>
+	</select>
+	
+	<select id="mytalkTextlist" resultMap="BoardMap">
+		<![CDATA[
+		select * from
+		(select /*+INDEX_DESC(talk_board pk_talkboard)*/ 
+		ROWNUM as rn, t.bno, title, content, k.board_name from talk_board t
+		left outer join kind_board k on t.board_id = k.board_id 
+		where t.memberId = #{memberId} and rownum <= #{criteria.maxRow}) where rn > #{criteria.minRow}
+		]]>
+	</select>
+	
+	<select id="myeventTextlist" resultMap="BoardMap">
+		<![CDATA[
+		select * from
+		(select /*+INDEX_DESC(event_board pk_eventboard)*/ 
+		ROWNUM as rn, e.bno, title, content, k.board_name from event_board e
+		left outer join kind_board k on e.board_id = k.board_id 
+		where e.memberId = #{memberId} and rownum <= #{criteria.maxRow}) where rn > #{criteria.minRow}
+		]]>
+	</select>
+	
 	
 </mapper>

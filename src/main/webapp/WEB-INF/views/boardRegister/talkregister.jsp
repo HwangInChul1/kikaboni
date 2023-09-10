@@ -15,9 +15,11 @@
 			<div class="card">
 				<div class="card-header">
 					<h1>자유게시판</h1>
-				</div>
+				</div>s
 				<div class="card-body">
 					<form action="${ctxPath}/boardRegister/talkregister" method="post">	
+						<input type="hidden" name="memberId" value="${authInfo.memberId}">
+						<input type="hidden" name="board_id" value="3">
 						<div class="form-group">
 							<input class="form-control" name="title" placeholder="제목"/>
 						</div>
@@ -25,7 +27,16 @@
 							<textarea class="form-control" rows="10" name="content" placeholder="내용"></textarea>
 						</div>
 						<div class="form-group">
-							<input class="form-control" name="writer" placeholder="작성자"/>
+							<input class="form-control" name="writer" value="${authInfo.memberId}" readonly="readonly"/>
+						</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						<div class="uploadDiv form-group">
+							<input type="file" name="uploadFile" multiple="multiple" class="form-control">
+						</div>
+						<div class="uploadResultDiv form-group">
+							<ul class="list-group">
+						
+							</ul>
 						</div>
 						<div class="d-flex float-right">
 							<button type="button" class="btn btn-outline-primary register mr-2">작성</button>					
@@ -75,4 +86,4 @@ $(function() {
 
 
 </script>
-
+<script src="${ctxPath}/resources/js/upload/talkboard_upload.js"></script>

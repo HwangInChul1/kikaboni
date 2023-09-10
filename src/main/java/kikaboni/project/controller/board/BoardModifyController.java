@@ -31,7 +31,7 @@ public class BoardModifyController {
 	@Autowired
 	BoardService boardService;
 	
-	// 상세 게시판에서 수정창으로 이동
+	// 상세 게시판에서 수정창으로 이동(빵 추천)
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/goodbreadmodify")
 	public void goodmodify(Model model, Long bno, Criteria criteria, Authentication auth) { 
@@ -44,19 +44,46 @@ public class BoardModifyController {
 		model.addAttribute("vo", vo);
 	}
 	
-	// 게시판에서 글 작성으로 이동
+	// 상세 게시판에서 수정창으로 이동(메뉴 건의)
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/menubreadmodify")
-	public void menuregister(Model model, Long bno) { 
+	public void menuregister(Model model, Long bno, Criteria criteria, Authentication auth) { 
 		BoardVO vo = boardService.menuGet(bno);
+		String name = auth.getName();
+		if(!vo.getWriter().equals(name) &&
+			!auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			throw new AccessDeniedException("Access denied"); 
+		}
 		model.addAttribute("vo", vo);
 	}
 	
-	// 게시판에서 글 작성으로 이동
+	// 상세 게시판에서 수정창으로 이동(사장님과 대화)
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/talkmodify")
-	public void talkregister(Model model, Long bno) { 
+	public void talkregister(Model model, Long bno, Criteria criteria, Authentication auth) { 
 		BoardVO vo = boardService.talkGet(bno);
+		String name = auth.getName();
+		if(!vo.getWriter().equals(name) &&
+			!auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			throw new AccessDeniedException("Access denied"); 
+		}
 		model.addAttribute("vo", vo);
 	}
+	
+	// 상세 게시판에서 수정창으로 이동(이벤트)
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/eventmodify")
+	public void eventregister(Model model, Long bno, Criteria criteria, Authentication auth) { 
+		BoardVO vo = boardService.eventGet(bno);
+		String name = auth.getName();
+		if(!vo.getWriter().equals(name) &&
+			!auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			throw new AccessDeniedException("Access denied"); 
+		}
+		model.addAttribute("vo", vo);
+	}
+	
+	
 	
 	
 	// 수정 처리하는 부분
@@ -89,26 +116,59 @@ public class BoardModifyController {
 	}
 	
 	// 수정 처리하는 부분
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.writer or hasRole('ROLE_ADMIN')")
 	@PostMapping("/menumodify")
-	public String changemenuModify(BoardVO vo, RedirectAttributes rttr, Criteria criteria) {
+	public String changemenuModify(BoardVO vo, RedirectAttributes rttr, Criteria criteria, Authentication auth) {
 		
-		boardService.menuUpdate(vo);
-		rttr.addFlashAttribute("result", vo.getBno());
-		rttr.addFlashAttribute("operation", "update");
+		log.info(vo.getAttachList());
+		log.info("Principal Name: " + auth.getName());
+		log.info("VO Writer: " + vo.getWriter());
+		
+		if(boardService.menuUpdate(vo)) {
+			rttr.addFlashAttribute("result", vo.getBno());
+			rttr.addFlashAttribute("operation", "update");
+		}
 		
 		return "redirect:/boardkind/breadMenuProposalList"+criteria.getListLink();
 	}
 	
 	// 수정 처리하는 부분
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.writer or hasRole('ROLE_ADMIN')")
 	@PostMapping("/talkmodify")
-	public String changetalkModify(BoardVO vo, RedirectAttributes rttr, Criteria criteria) {
+	public String changetalkModify(BoardVO vo, RedirectAttributes rttr, Criteria criteria, Authentication auth) {
 		
-		boardService.talkUpdate(vo);
-		rttr.addFlashAttribute("result", vo.getBno());
-		rttr.addFlashAttribute("operation", "update");
+		log.info(vo.getAttachList());
+		log.info("Principal Name: " + auth.getName());
+		log.info("VO Writer: " + vo.getWriter());
+		
+		if(boardService.talkUpdate(vo)) {
+			rttr.addFlashAttribute("result", vo.getBno());
+			rttr.addFlashAttribute("operation", "update");
+		}
 		
 		return "redirect:/boardkind/CEOtalkList"+criteria.getListLink();
 	}
+	
+	// 수정 처리하는 부분
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.writer or hasRole('ROLE_ADMIN')")
+	@PostMapping("/eventmodify")
+	public String changeeventModify(BoardVO vo, RedirectAttributes rttr, Criteria criteria, Authentication auth) {
+		
+		log.info(vo.getAttachList());
+		log.info("Principal Name: " + auth.getName());
+		log.info("VO Writer: " + vo.getWriter());
+		
+		if(boardService.eventUpdate(vo)) {
+			rttr.addFlashAttribute("result", vo.getBno());
+			rttr.addFlashAttribute("operation", "update");
+		}
+		
+		return "redirect:/boardkind/eventList"+criteria.getListLink();
+	}
+	
+	
+	
+	
 	
 	
 	// 삭제 처리하는 부분
@@ -124,6 +184,7 @@ public class BoardModifyController {
 	}
 	
 	// 삭제 처리하는 부분
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.writer or hasRole('ROLE_ADMIN')")
 	@PostMapping("/menudelete")
 	public String changemenuDelete(BoardVO vo, Long bno, RedirectAttributes rttr, Criteria criteria) {
 		
@@ -135,6 +196,7 @@ public class BoardModifyController {
 	}
 	
 	// 삭제 처리하는 부분
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.writer or hasRole('ROLE_ADMIN')")
 	@PostMapping("/talkdelete")
 	public String changetalkDelete(BoardVO vo, Long bno, RedirectAttributes rttr, Criteria criteria) {
 		
@@ -143,6 +205,18 @@ public class BoardModifyController {
 		rttr.addFlashAttribute("operation", "delete");
 		
 		return "redirect:/boardkind/CEOtalkList"+criteria.getListLink();
+	}
+	
+	// 삭제 처리하는 부분
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.writer or hasRole('ROLE_ADMIN')")
+	@PostMapping("/eventdelete")
+	public String changeEventDelete(BoardVO vo, Long bno, RedirectAttributes rttr, Criteria criteria) {
+		
+		boardService.eventDelete(bno);
+		rttr.addFlashAttribute("result", vo.getBno());
+		rttr.addFlashAttribute("operation", "delete");
+		
+		return "redirect:/boardkind/eventList"+criteria.getListLink();
 	}
 	
 }
