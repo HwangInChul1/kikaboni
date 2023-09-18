@@ -8,7 +8,7 @@
 </div>
 
 
-<div class="d-flex justify-content-center p-2">
+<div class="d-flex justify-content-center p-2 mt-3">
 	<div>
 		<ul class="list-group mt-3 mr-5" style="width:200px;">
 			<li class="list-group-item">
@@ -70,7 +70,7 @@
 				</c:forEach>
 			</c:if>
 		</table>
-			<div style="position:absolute; right:370px;">
+			<div style="position:absolute; right:420px; top:220px;">
 				<button type="reset" class="btn btn-outline-primary">취소</button>
 				<button type="button" class="btn btn-outline-primary order">주문하기</button>
 			</div>
@@ -104,33 +104,16 @@
 </div>
 
 
-
-<!-- 원본 이미지 모달창 -->
-<div class="modal fade" id="showImage">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-	        <div class="modal-header">
-	            <h4 class="modal-title">원본 이미지 보기</h4>
-	            <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        </div>
-	        <div class="modal-body"></div>
-        </div>
-    </div>
-</div>
-
 <form class="fmno">
 	<input type="hidden" name="pageNum" value="${criteria.pageNum}">
 	<input type="hidden" name="amount" value="${criteria.amount}">
 </form>
 
 
-
 <script>
 
 
 $(function(){
-	
-	//$('.proCount').prop("disabled",true);
 	
 	let pageForm = $('.pageMove');
 
@@ -145,95 +128,54 @@ $(function(){
 			
 		})
 		
-		// 조회 페이지로 이동
-		$('.getmove').click(function(e) {
-			e.preventDefault();
-			let getValue = $(this).attr('href');
-			$('.fmno').find('[name="mno"]').remove(); // 기존 bno input 제거
-			 let pageNumAndAmount = $('.fmno').find('[name="pageNum"], [name="amount"]');
-			 if (pageNumAndAmount.length == 0) {
-				  $('.fmno').html($('<input/>',{type:'hidden',name:'pageNum',value:'1'}))
-	    		 			.html($('<input/>',{type:'hidden',name:'amount',value:'5'}))
-			 } 
-				 
-			$('.fmno').append($('<input/>', {type:'hidden',name:'mno',value:getValue}))
-					  .attr('action','${ctxPath}/menu/goodBreadGet')
-					  .attr('method','get')
-					  .submit();
-		})
-
-		
-
-		
-		// 체크박스를 가지고와서
-//		let check = $('input[name=selectMenus]')
-		// 클릭 시 체크상태면 텍스트박스 활성화, 체크가 아니면 비활성화하기(즉, 원래 체크박스는 disabled 상태여야 한다.)
-//		check.click(function(){
+		$('.order').click(function(){ 
 			
-//			let tr = $(this).closest('tr');
-//			if(check.is(":checked")){
-//				tr.find('.proCount').prop('disabled', false);
-//			} else {
-//				tr.find('.proCount').prop('disabled', true);
-//			}
-			
-//		})
-		
-		$('.order').click(function(){ // 주문하기 클릭하면
-			
-			let selectMenus = []; // 선택한 메뉴들이 올 수 있게 배열 생성
-			let countCheck = true; // 개수 체크할 변수 생성(기본값 true)
+			let selectMenus = []; 
+			let countCheck = true; 
 			
 			$('input[name=selectMenus]:checked').each(function(){
 				
 				let menus = $(this).closest('tr');
 				
 				let menuInfo = {
-					mno : menus.find('input[name="mno"]').val(), // tr에서 input의 name이 mno를 찾아서 mno에 저장
+					mno : menus.find('input[name="mno"]').val(), 
 					name : menus.find('input[name="name"]').val(),
 					price : menus.find('input[name="price"]').val(),
 					proCount : menus.find('input[name="proCount"]').val(),
 					proId : menus.find('input[name="proId"]').val(),
 					type : menus.find('input[name="type"]').val(),
-					memberId : menus.find('input[name="memberId"]').val()
+					memberId : menus.find('input[name="memberId"]').val(),
 				};
-				console.log(selectMenus);
-				console.log(menuInfo.mno);
-				console.log(menuInfo.proCount);
 				
-				selectMenus.push(menuInfo); // 메뉴 정보를 배열에 저장
+				selectMenus.push(menuInfo); 
 
 			})
-			
-			// ajax통신
-			if(selectMenus.length > 0 && countCheck){
-				$.ajax({
-					type : 'post',
-					url : '${ctxPath}/order/myOrder',
-					data : JSON.stringify(selectMenus),	// data로는 메뉴의 정보가 담긴 배열변수를 보냄, 그런데 그걸 json형식으로 변경해서 보내기
-					contentType : 'application/json; charset=utf-8',
-					success : function(result){
-						console.log(result)
+								
+				// ajax통신
+				if(selectMenus.length > 0 && countCheck){
 						console.log(selectMenus);
-						if(result == "success")alert('주문에 성공했습니다')
-						
-					},
-					error : function(xhr, status, er){
-				
-						alert('주문에 실패했습니다.')
-					}
-				})
-			} else {
-				alert('주문할 메뉴를 선택하거나, 수량을 체크해주세요')
-			}
+					$.ajax({
+						type : 'post',
+						url : '${ctxPath}/order/myOrder',
+						data : JSON.stringify(selectMenus),
+						contentType : 'application/json; charset=utf-8',
+						success : function(result){
+							console.log(result)
+							console.log(selectMenus);
+							if(result == "success")alert('주문에 성공했습니다')
+							
+						},
+						error : function(xhr, status, er){
+					
+							alert('주문에 실패했습니다.')
+						}
+					})
+				} else {
+					alert('주문할 메뉴를 선택하거나, 수량을 체크해주세요')
+				}
 			
 		})
 		
-		$(this).closest('tr').find('input[name=selectMenus]').remove();
-		
 })
-
-
-	
 
 </script>

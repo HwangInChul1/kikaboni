@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kikaboni.project.domain.BoardAttachVO;
+import kikaboni.project.domain.BoardKindVO;
 import kikaboni.project.domain.BoardVO;
 import kikaboni.project.domain.Criteria;
 
@@ -84,6 +85,18 @@ public interface BoardService {
 	
 	int eventtotalCount();
 	
+	
+	// 회원아이디 별 게시판의 글 전체 개수
+	// 전체 게시물 수(빵 추천)
+	int MytotalCount(String memberId);
+	// 전체 게시물 수(메뉴 건의)
+	int MymenutotalCount(String memberId);
+	// 전체 게시물 수(사장님과 대화)
+	int MytalktotalCount(String memberId);
+	// 전체 게시물 수(이벤트, 공지사항)
+	int MyeventtotalCount(String memberId);
+	
+	
 	List<BoardAttachVO> getAttachList(Long bno);
 	List<BoardAttachVO> menuAttachList(Long bno);
 	List<BoardAttachVO> talkAttachList(Long bno);
@@ -103,6 +116,7 @@ public interface BoardService {
 	List<BoardVO> mytalkTextlist(String memberId, Criteria criteria);
 	
 	List<BoardVO> myeventTextlist(String memberId, Criteria criteria);
+	
 	
 	
 	

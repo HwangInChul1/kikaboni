@@ -19,8 +19,7 @@ public class CustomUserDetailService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		MemberVO vo = memberRepository.read(username);
 		if(vo == null) {
-			throw new UsernameNotFoundException(username); // UsernameNotFoundException은 존재하는 메소드이다. 
-														   // 그런데 매개변수를 하나 받음 
+			throw new UsernameNotFoundException(username); 
 		}
 		
 		return new CustomUser(vo);

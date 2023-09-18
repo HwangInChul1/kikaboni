@@ -28,4 +28,6 @@ public interface MenuRepository {
 	
 	// 메뉴 전체 개수
 	int getTotalCount();
+	
+
 }

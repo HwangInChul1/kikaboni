@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kikaboni.project.domain.BoardKindVO;
 import kikaboni.project.domain.BoardVO;
 import kikaboni.project.domain.Criteria;
 
@@ -77,6 +78,19 @@ public interface BoardRepository {
 	int eventtotalCount();
 	
 	
+	// 회원아이디 별 게시판의 글 전체 개수
+	// 전체 게시물 수(빵 추천)
+	int MytotalCount(String memberId);
+	// 전체 게시물 수(메뉴 건의)
+	int MymenutotalCount(String memberId);
+	// 전체 게시물 수(사장님과 대화)
+	int MytalktotalCount(String memberId);
+	// 전체 게시물 수(이벤트, 공지사항)
+	int MyeventtotalCount(String memberId);
+	
+	
+
+	
 	// 게시물 당 댓글 수
 	void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 	
@@ -100,6 +114,7 @@ public interface BoardRepository {
 	
 	// 마이페이지(내가 쓴 글(글 번호, 제목, 내용))
 	List<BoardVO> myeventTextlist(@Param("memberId") String memberId, @Param("criteria") Criteria criteria);
+	
 	
 	
 }

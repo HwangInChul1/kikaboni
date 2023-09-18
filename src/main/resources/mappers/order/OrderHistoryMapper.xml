@@ -56,5 +56,12 @@
 		select count(ono) from order_history
 	</select>
 	
+	<select id="MyOrderTotalCount" resultType="int">
+		select count(ono) from order_history where memberId = #{memberId}
+	</select>
+	
+	
+	
+	
 
 </mapper>

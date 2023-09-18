@@ -3,52 +3,53 @@
 <%@ include file="../includes/header.jsp" %>
 
 <div class="container d-flex justify-content-center mt-3">
-		<h1>들어온 주문 내역</h1>
+	<h1>메뉴 건의 게시판 내가 쓴 글</h1>
 </div>
 
 <div class="d-flex justify-content-center p-2">
-
 	<div>
-		<ul class="list-group mt-5" style="width:250px;">
+		<ul class="list-group mt-3 mr-5" style="width:200px;">
 			<li class="list-group-item">
-				<a href="${ctxPath}/admin/menuList">들어온 주문</a>
+				<a href="${ctxPath}/mypage">회원 정보</a>
+			</li>
+			<li class="list-group-item">
+				<a href="${ctxPath}/mypageUpdate">회원정보 변경</a>
+			</li>	
+			<li class="list-group-item">
+				<a href="${ctxPath}/member/mytext">내가 쓴 글</a>
+			</li>
+			<li class="list-group-item">
+				<a href="${ctxPath}/member/myMenuList">나의 주문 내역</a>
 			</li>
 		</ul>
 	</div>
-	<div class="container d-flex justify-content-center mt-5" style="position:relative">
+	
+	
+	<div class="container d-flex justify-content-center mt-3" style="position:relative">
 		<div style="position:absolute; left:0px;  width:900px;">
-			<table class="table table-info table-striped table-hover table-border text-center">
+			<table class="table table-primary table-striped table-hover table-border text-center">
 				<thead>
 					<tr>
-						<td>주문 번호</td>
-						<td>회원 명</td>
-						<td>제품 명</td>
-						<td>주문 날짜</td>
-						<td>주문 개수</td>
-						<td>제품 가격</td>
-						<td>총 가격</td>					
+						<td>게시판 종류</td>
+						<td>게시글 번호</td>
+						<td>게시글 제목</td>
+						<td>내가 쓴 글</td>						
 					</tr>
 				</thead>
-		<c:if test="${not empty list}">
-					<c:forEach items="${list}" var="orderHistory">
+				<c:if test="${not empty menu}">
+					<c:forEach items="${menu}" var="m">
 						<tbody>
-							   <tr>
-					           		<td>${orderHistory.ono}</td>
-					           		<td>${orderHistory.memberId}</td>
-					            	<td>
-					              	 	<c:forEach items="${orderHistory.menuList}" var="menu">
-					                  		 ${menu.name}<br>
-					                	 </c:forEach>
-					           		</td>
-					            	<td><fmt:formatDate value="${orderHistory.orderDate}" pattern="yyyy년 MM월 dd일 HH시 mm분"/></td>
-					            	<td>${orderHistory.proCount}</td>
-					           		<td>
-					               		 <c:forEach items="${orderHistory.menuList}" var="menu">
-					                  		  ${menu.price}<br>
-					                	 </c:forEach>
-					            	</td>
-					           		<td>${orderHistory.menuList[0].price * orderHistory.proCount}</td>
-					        </tr>
+							<tr>
+								<td>
+									<c:forEach items="${m.myTextList}" var="kind">
+			                     		 ${kind.board_name}<br/>
+			                    	</c:forEach>
+
+								</td>
+								<td>${m.bno}</td>
+								<td>${m.title}</td>
+								<td>${m.content}</td>
+							</tr>
 						</tbody>
 					</c:forEach>
 				</c:if>
@@ -70,7 +71,7 @@
 					</li>
 				</c:if>
 			</ul>
-			<form action="${ctxPath}/admin/menuList" method="get" class="pageMove">
+			<form action="${ctxPath}/member/mytext" method="get" class="pageMove">
 				<input type="hidden" name="pageNum" value="${page.criteria.pageNum}"/>
 				<input type="hidden" name="amount" value="${page.criteria.amount}"/>
 			</form>
@@ -95,13 +96,8 @@ $(function(){
 		
 	})
 	
-	
 })
 
-
-
-
 </script>
-
 
 

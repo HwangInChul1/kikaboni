@@ -138,13 +138,13 @@ let showPage = function(replyCount){
 	
 	});
 
-	// 댓글 수정 및 삭제 처리
+
 	 replyContainer.on('click','.reply_modify a', function(e){
-	// 클래스가 chat을 클릭하면 reply_modify의 클래스 이름을가지며 하위의 a태그에 클릭이벤트 권한 넘김
-		e.preventDefault(); // a태그 기본동작 금지
+
+		e.preventDefault(); 
 		
-		let rno = $(this).closest('li').data('rno'); // 클릭하면 조상중에 li를 찾아 data가 rno인 것을 가져옴
-		let operation = $(this).attr('href'); // 클릭하면 href속성의 값을 가져와서 operation에 저장
+		let rno = $(this).closest('li').data('rno'); 
+		let operation = $(this).attr('href');
 		
 		if(operation == 'delete'){
 			replyService.remove(rno, function(result){
@@ -162,24 +162,17 @@ let showPage = function(replyCount){
 		if(operation == 'modify'){
 			
 		let listTag = $(this).closest('li');
-		// let replyWriteForm = $('.replyWriteForm');
-		// listTag.append(replyWriteForm); // li태그를 가진 변수에 댓글작성 창을 추가
-		
-		// 이렇게 li를 찾아서 댓글작성창을 추가하는것까지는 좋지만, 밑의 댓글작성창이 사라짐, 그래서 clone로 복사해서 붙이자
-		
-		// 위의 댓글 작성하는 창을 li에 추가하는건 주석처리 
+	
 		let replyUpdateForm = $('.replyWriteForm').clone();
-		//	listTag.append(replyUpdateForm);
-		
-		// 여기에서 문제점, clone된 작성창이 1씩 더해가면서 계속 늘어남, 이 부분 수정
-		replyUpdateForm.attr('class','my-3 replyUpdateForm'); // replyUpdateForm의 class 속성에 이름주고, 왼쪽3칸 띄움
+
+		replyUpdateForm.attr('class','my-3 replyUpdateForm');
 		let updateBtn = replyUpdateForm.find('.replyBtn').html('수정');
 		
-		// 이제는 1씩 더해가면서 안나오고 한개씩 추가 됨, replyUpdateForm의 클래스 명을 바꿨기 때문이다. 하지만 그래도 추가되는걸 수정필요
+
 		let replyUpdateFormLength = listTag.find('.replyUpdateForm').length;
-		// li에서 replyUpdateForm을 찾아서 길이를 계산해서 변수에 저장
-		console.log(replyUpdateFormLength); // 콘솔로 찍어보니 확실히 1씩 늘어난다.
-		// 그래서 조건문을 써서 0초과하면 즉, 1이상이 되면 수정창을 삭제하면 됨
+	
+		console.log(replyUpdateFormLength); 
+	
 		if(replyUpdateFormLength > 0){
 			listTag.find('.replyUpdateForm').remove();
 			$(this).html('수정');
@@ -187,23 +180,20 @@ let showPage = function(replyCount){
 			return;
 		}
 		
-		// 그리고 다른 문제는 다른 댓글의 수정창도 같이 열린다. 이거 바꿔야 한다.
-		
-		// 그 전에 조회를 통해 댓글내용을 불러와서 수정하자
+
 		replyService.get(rno, function(result){
 			replyUpdateForm.find('.replyContent').val(result.reply);
 			replyUpdateForm.find('.replyer').html(result.replyer);
 		}, function(er){
 			console.log(er)
 		})
-		// get을 통해 댓글내용을 댓글수정창에 출력하게 되었다.
-		
-		listTag.append(replyUpdateForm); // 위에 clone이 만들어지고 바로 추가하는게 아닌
-		// get으로 댓글내용 나오게 하고 난 뒤 추가(아무튼 밑부분에 추가)
+
+		listTag.append(replyUpdateForm);
+
 		$(this).html('취소');
 		$(this).next().hide();
 		
-		// 댓글 수정처리 해야 됨
+
 		updateBtn.click(function(){
 			let reply = {
 				rno : rno,

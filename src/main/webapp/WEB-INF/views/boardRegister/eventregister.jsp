@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="jumbotron text-center d-flex justify-content-center">
-		  		<h1>게시판 상세 페이지</h1>
+		  		<h1>게시판 글 작성 페이지</h1>
 		  	</div>
 	  	</div> <!-- col end -->
   	</div> <!-- row end -->
@@ -14,7 +14,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					<h1>자유게시판</h1>
+					<h1>글 작성</h1>
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath}/boardRegister/eventregister" method="post">	

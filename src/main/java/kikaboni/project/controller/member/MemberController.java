@@ -76,11 +76,11 @@ public class MemberController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
 	@GetMapping({"/mypage", "mypage/{path}"})
 	public String myPage(Principal principal, Model model, @PathVariable(required = false) String path) {
-		String memberId = principal.getName(); // 사용자의 아이디를 가져와서
+		String memberId = principal.getName(); 
 		if(path == null) {
-			MemberVO vo = memberService.read(memberId); // 사용자의 아이디를 통해 사용자의 정보를 가져와서 변수에 담고
-			model.addAttribute("vo", vo); // 사용자의 정보가 담긴 변수 vo를 vo라는 문자열에 담아서 model을 통해 전송
-			return "member/mypage"; // 전송되는 위치는 mypage다.
+			MemberVO vo = memberService.read(memberId); 
+			model.addAttribute("vo", vo); 
+			return "member/mypage"; 
 		}
 		return "member/" + path;
 	}
@@ -114,20 +114,20 @@ public class MemberController {
 		return new ResponseEntity<>("비밀번호가 변경 되었습니다.",HttpStatus.OK);
 	}
 	
-	// 회원가입 폼으로 보내는 메소드
+	
 	@GetMapping("/member/joinForm")
 	public String joinForm(MemberVO memberVO) {
 		return "member/join";
 	}
 	
-	// 회원가입 처리
+
 	@PostMapping("/member/join")
 	public String join(MemberVO memberVO, RedirectAttributes rttr) {
 		memberService.join(memberVO);
 		return "redirect:/";
 	}
 	
-	// 아이디 중복 체크
+	
 	@PostMapping("/member/idCheck")
 	@ResponseBody
 	public ResponseEntity<Boolean> idDuplicateCheck(String memberId){

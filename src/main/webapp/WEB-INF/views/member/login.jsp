@@ -15,7 +15,7 @@
 					<input type="text" name="memberId" class="form-control mb-3" placeholder="아이디를 입력해주세요">
 				</div>
 				<div class="form-group">
-					<input type="text" name="memberPwd" class="form-control" placeholder="비밀번호를 입력해주세요">
+					<input type="password" name="memberPwd" class="form-control" placeholder="비밀번호를 입력해주세요">
 				</div>
 				<c:if test="${not empty loginFail}">
 					<p style="color:red; font-size:10px; ">${loginFail}</p>

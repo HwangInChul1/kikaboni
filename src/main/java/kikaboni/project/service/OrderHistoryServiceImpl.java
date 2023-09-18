@@ -30,10 +30,7 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 
 	@Override
 	public void menuInsert(OrderHistoryVO vo) {
-		
-		
-		historyRepository.menuSelectKey(vo);
-		
+		historyRepository.menuInsert(vo);
 	}
 
 	@Override
@@ -44,6 +41,11 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 	@Override
 	public int orderTotalCount() {
 		return historyRepository.orderTotalCount();
+	}
+
+	@Override
+	public int MyOrderTotalCount(String memberId) {
+		return historyRepository.MyOrderTotalCount(memberId);
 	}
 
 

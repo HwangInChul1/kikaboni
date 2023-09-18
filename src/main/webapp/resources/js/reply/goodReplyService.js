@@ -42,7 +42,7 @@ let replyService = { // replyService라는 객체 생성
 		});
 	},
 	
-		// 댓글 조회
+	// 댓글 조회
 	get : function(rno, callback, error){
 
 		$.ajax({

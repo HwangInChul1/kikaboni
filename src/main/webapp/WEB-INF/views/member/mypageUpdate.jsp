@@ -82,7 +82,6 @@
        	</form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-outline-info showPwd">비밀번호 보기</button>
         <button class="btn btn-outline-danger changePwd">변경</button>
       </div>
 
@@ -94,11 +93,6 @@
 <script>
 
 $(function(){
-	
-	$('.changePwdForm').click(function(){
-		$('#changePwdModal').find('input').val('');
-		$('#changePwdModal').modal('show');
-	})
 	
 $('.changePwd').click(function(){
 	
@@ -113,17 +107,17 @@ $('.changePwd').click(function(){
 		$.ajax({
 			type : 'post',
 			url : '${ctxPath}/mypage/changePwd',
-			data : {  		// 데이터를 보내야 하는데 객체로 보내야 한다.
+			data : {  	
 				memberId : $('[name="memberId"]').val(),
-				currentPwd : currentPwd,	// 모달창에 있는 값을 보내줘야 한다.
+				currentPwd : currentPwd,	
 				newPwd: newPwd
 			},
 			success : function(result){
 				alert(result)
-				$('#changePwdModal').modal('hide'); // modal속성에 'hide'를 주면 모달창 닫김
+				$('#changePwdModal').modal('hide'); 
 			},
 			error : function(xhr, status, er){
-				alert(xhr.responseText) // 비밀번호 틀린경우 에러 남
+				alert(xhr.responseText) 
 				$('#changePwdModal').find('input').val('');
 			}
 		});

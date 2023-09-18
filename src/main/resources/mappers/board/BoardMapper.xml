@@ -134,19 +134,19 @@
 	
 	<!-- 게시물 수정 -->
 	<update id="commendUpdate">
-		update good_board set title=#{title}, content=#{content} where bno=#{bno}
+		update good_board set title=#{title}, content=#{content}, updateDate=sysdate where bno=#{bno}
 	</update>
 	
 	<update id="menuUpdate">
-		update menu_board set title=#{title}, content=#{content} where bno=#{bno}
+		update menu_board set title=#{title}, content=#{content}, updateDate=sysdate where bno=#{bno}
 	</update>
 	
 	<update id="talkUpdate">
-		update talk_board set title=#{title}, content=#{content} where bno=#{bno}
+		update talk_board set title=#{title}, content=#{content}, updateDate=sysdate where bno=#{bno}
 	</update>
 	
 	<update id="eventUpdate">
-		update event_board set title=#{title}, content=#{content} where bno=#{bno}
+		update event_board set title=#{title}, content=#{content}, updateDate=sysdate where bno=#{bno}
 	</update>
 	
 
@@ -184,6 +184,24 @@
 	<select id="eventtotalCount" resultType="int">
 	 select count(bno) from event_board
 	</select>
+	
+	
+	<!-- 회원 별 전체 게시물 수 -->
+	<select id="MytotalCount" resultType="int">
+		select count(bno) from good_board where memberId = #{memberId}
+	</select>
+	
+	<select id="MymenutotalCount" resultType="int">
+		select count(bno) from menu_board where memberId = #{memberId}
+	</select>
+
+	<select id="MytalktotalCount" resultType="int">
+		select count(bno) from talk_board where memberId = #{memberId}
+	</select>
+
+	<select id="MyeventtotalCount" resultType="int">
+		select count(bno) from event_board where memberId = #{memberId}
+	</select>
 
 
 	<resultMap type="BoardVO" id="BoardMap">
@@ -218,7 +236,7 @@
 		(select /*+INDEX_DESC(menu_board pk_menuboard)*/ 
 		ROWNUM as rn, m.bno, title, content, k.board_name from menu_board m
 		left outer join kind_board k on m.board_id = k.board_id 
-		where k.memberId = #{memberId} and rownum <= #{criteria.maxRow}) where rn > #{criteria.minRow}
+		where m.memberId = #{memberId} and rownum <= #{criteria.maxRow}) where rn > #{criteria.minRow}
 		]]>
 	</select>
 	

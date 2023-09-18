@@ -8,7 +8,7 @@
 
 <div class="d-flex justify-content-center p-2">
 	<div>
-		<ul class="list-group mt-3 mr-5" style="width:200px;">
+		<ul class="list-group mt-3" style="width:200px;">
 			<li class="list-group-item">
 				<a href="${ctxPath}/mypage">회원 정보</a>
 			</li>
@@ -23,61 +23,28 @@
 			</li>
 		</ul>
 	</div>
-	<div class="container d-flex justify-content-center mt-3" style="position:relative">
-		<div style="position:absolute; left:0px;  width:900px;">
-			<table class="table table-primary table-striped table-hover table-border text-center">
-				<thead>
-					<tr>
-						<td>게시판 종류</td>
-						<td>게시글 번호</td>
-						<td>게시글 제목</td>
-						<td>내가 쓴 글</td>						
-					</tr>
-				</thead>
-				<c:if test="${not empty good}">
-					<c:forEach items="${good}" var="g">
-						<tbody>
-							<tr>
-								<td>
-									<c:forEach items="${g.myTextList}" var="good">
-			                     		 ${good.board_name}<br/>
-			                    	</c:forEach>
-
-								</td>
-								<td>${g.bno}</td>
-
-								<td>${g.title}</td>
-
-								<td>${g.content}</td>
-
-							</tr>
-						</tbody>
-					</c:forEach>
-				</c:if>
-			</table>
-			<ul class="pagination d-flex justify-content-center">
-				<c:if test="${page.prev}"> <!-- 이전페이지 활성화 -->
-					<li class="page-item">
-						<a class="page-link" href="${page.startPage-1}">이전</a>
-					</li>
-				</c:if>
-				<c:forEach begin="${page.startPage}" end="${page.endPage}" var="p"> <!-- 페이지네이션을 반복 --> 
-					<li class="page-item ${page.criteria.pageNum == p ? 'active' : '' }">
-						<a class="page-link" href="${p}">${p}</a>
-					</li>
-				</c:forEach>
-				<c:if test="${page.next}">
-					<li class="page-item">
-						<a class="page-link" href="${page.endPage+1}">다음</a>
-					</li>
-				</c:if>
-			</ul>
-			<form action="${ctxPath}/member/mytext" method="get" class="pageMove">
-				<input type="hidden" name="pageNum" value="${page.criteria.pageNum}"/>
-				<input type="hidden" name="amount" value="${page.criteria.amount}"/>
-			</form>
-		</div>
+	
+	<div class="container">
+				<ul class="list-group texts list-group-horizontal justify-content-center mt-3 mr-3 col-10">
+			<li class="list-group-item text">
+				<a href="${ctxPath}/member/myCommendtext">추천게시판</a>
+			</li>
+			<li class="list-group-item text">
+				<a href="${ctxPath}/member/myMenutext">메뉴건의 게시판</a>
+			</li>	
+			<li class="list-group-item text">
+				<a href="${ctxPath}/member/myTalktext">사장님께 한 마디 게시판</a>
+			</li>
+			<li class="list-group-item text">
+				<a href="${ctxPath}/member/myEventtext">이벤트/공지사항 게시판</a>
+			</li>
+		</ul>
 	</div>
+	
+	
+	
+	
+	
 </div>
 
 
@@ -100,5 +67,26 @@ $(function(){
 })
 
 </script>
+
+
+<style>
+
+.text{
+	
+	width : 25%;
+	text-align : center;
+
+}
+
+.texts{
+
+	
+	
+
+}
+
+
+</style>
+
 
 

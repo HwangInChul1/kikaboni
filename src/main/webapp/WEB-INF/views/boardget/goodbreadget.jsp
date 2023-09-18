@@ -46,7 +46,7 @@
 		</div>	
 	</div>
 	
-		<div class="row my-5">
+	<div class="row my-5">
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
@@ -63,38 +63,12 @@
 	
 </div>
 
-
-
 <div class="container">
 <h3 class="mt-5">댓글</h3>
 	<div class="row">
 		<div class="col-12">
 			<ul class="list-group chat">
-				<li class="list-group-item" data-rno="댓글번호" style="height:100%;">
-					<div class="d-flex justify-content-between">
-					  <div class="d-flex">
-					    <div class="user_image mr-3">
-					      <img class="rounded-circle" src="${ctxPath}/resources/images/userImage_basic.png" alt="유저이미지" 
-					      style="width:70px; height:70px; border:solid 1px"/>
-					    </div>
-					    <div class="comment_wrap">
-					      <div class="comment_info text-right" style="width:150px;">
-					        <span class="userName badge badge-pill badge-info mr-2" style="width:100%;">작성자</span>
-					        <span class="badge badge-dark mt-2" style="width:100%;">2023-08-21 00:00</span>
-					      </div>
-					      <div class="comment_content py-2">댓글 내용입니다.</div>
-					    </div>
-					  </div>
-					 </div>
-					 <div class="reply_modify float-right">
-						    <button type="button" class="btn btn-light dropdown-toggle mr-2" 
-						    style="position:absolute; top:0px; right:0px;" data-toggle="dropdown">변경</button>
-						    <div class="dropdown-menu">						   
-						      <a class="dropdown-item replyModify" href="modify">수정</a>
-						      <a class="dropdown-item replyDelete" href="delete">삭제</a>
-						</div>
-					</div>
-				</li>
+				
 			</ul>		
 		</div>
 	</div>
@@ -155,7 +129,6 @@
 <script>
 
 $(function() {
-	
 	let id = $('input[name="id"]').val();
 	console.log(id);
 	
@@ -181,9 +154,7 @@ $(function() {
 			form.attr('action','${ctxPath}/boardModify/goodbreadmodify');
 		}
 		form.submit();
-		
 	})
-	
 })
 
 </script>

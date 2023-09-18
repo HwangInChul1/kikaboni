@@ -25,7 +25,8 @@
 				<tbody>
 					<tr>
 						<td>${b.bno}</td>
-						<td><a class="getmove" href="${b.bno}">${b.title}</a></td>
+						<td><a class="getmove" href="${b.bno}">${b.title}
+								${b.replyCnt == 0 ? '' : [b.replyCnt]}</a></td>
 						<td>${b.content}</td>
 						<td>${b.writer}</td>
 						<td><fmt:formatDate value="${b.writeDate}" pattern="yyyy년 MM월 dd일 HH시 mm분"/></td>

@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="jumbotron text-center d-flex justify-content-center">
-		  		<h1>게시판 상세 페이지</h1>
+		  		<h1>게시판 글 작성 페이지</h1>
 		  	</div>
 	  	</div> <!-- col end -->
   	</div> <!-- row end -->
@@ -14,7 +14,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					<h1>자유게시판</h1>
+					<h1>글 작성</h1>
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath}/boardRegister/goodregister" method="post">	
@@ -39,7 +39,7 @@
 							</ul>
 						</div>
 						<div class="d-flex float-right">
-							<button type="button" class="btn btn-outline-primary register mr-2">작성</button>					
+							<button class="btn btn-outline-primary register mr-2">작성</button>					
 							<button type="button" class="btn btn-outline-primary list">목록</button>
 						</div>					
 					</form>
@@ -62,33 +62,19 @@
 
 $(function() {
 	
-	
 	let id = $('input[name="board_id"]').val();
 	console.log(id);
 	
-
 	let form = $('form');
 	
-	$('.register').click(function() {
-		form.attr('method','post')
-			.attr('action','${ctxPath}/boardRegister/goodregister')
-			.appendTo('body')
-			.submit();
-	})
-	
-	
 	$('.list').click(function() {
-		console.log('aaa');	
 		form.find('[name="title"],[name="content"],[name="writer"]').remove();
 		
 		form.attr('method','get')
 			.attr('action','${ctxPath}/boardkind/breadGoodList')
 			.submit();
 	})
-
 })
-
-
 
 </script>
 <script src="${ctxPath}/resources/js/upload/goodboard_upload.js"></script>

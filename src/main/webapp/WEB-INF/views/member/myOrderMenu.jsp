@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp" %>
 
-
 <div class="container d-flex justify-content-center mt-3">
 	<h1>나의 주문 내역</h1>
 </div>	
@@ -24,24 +23,24 @@
 			</li>
 		</ul>
 	</div>
-	
-	<div class="container d-flex justify-content-center ml-5 mt-3" style="position:relative">
-		<table class="table table-bordered text-center table-info" style="position:absolute; left:50px; width:900px;">
-			<thead>
-				<tr>
-					<td>주문 번호</td>
-					<td>내 아이디</td>
-					<td>제품 명</td>
-					<td>주문 날짜</td>
-					<td>주문 개수</td>
-					<td>제품 가격</td>
-					<td>총 가격</td>
-				</tr>
-			</thead>
-				<c:if test="${not empty myOrder}">
+	<div class="container d-flex justify-content-center mt-3" style="position:relative">
+		<div style="position:absolute; right:290px; width:900px;">
+			<table class="table table-info table-striped table-hover table-border text-center">
+				<thead>
+					<tr>
+						<td>주문 번호</td>
+						<td>내 아이디</td>
+						<td>제품 명</td>
+						<td>주문 날짜</td>
+						<td>주문 개수</td>
+						<td>제품 가격</td>
+						<td>총 가격</td>					
+					</tr>
+				</thead>
+		<c:if test="${not empty myOrder}">
 					<c:forEach items="${myOrder}" var="myOrderMenu">
-					    <tbody>
-					        <tr>
+						<tbody>
+							  <tr>
 					            <td>${myOrderMenu.ono}</td>
 					            <td>${myOrderMenu.memberId}</td>
 					            <td>
@@ -58,13 +57,11 @@
 					            </td>
 					            <td>${myOrderMenu.menuList[0].price * myOrderMenu.proCount}</td>
 					        </tr>
-					    </tbody>
+						</tbody>
 					</c:forEach>
 				</c:if>
-		</table>
-	</div>
-		<div class="container d-flex justify-content-center mb-3">
-			<ul class="pagination" style="position:absolute; top:200px; right:400px;">
+			</table>
+			<ul class="pagination d-flex justify-content-center">
 				<c:if test="${page.prev}"> <!-- 이전페이지 활성화 -->
 					<li class="page-item">
 						<a class="page-link" href="${page.startPage-1}">이전</a>
@@ -75,26 +72,21 @@
 						<a class="page-link" href="${p}">${p}</a>
 					</li>
 				</c:forEach>
-					<c:if test="${page.next}">
-						<li class="page-item">
-							<a class="page-link" href="${page.endPage+1}">다음</a>
-						</li>
-					</c:if>
-				</ul>
+				<c:if test="${page.next}">
+					<li class="page-item">
+						<a class="page-link" href="${page.endPage+1}">다음</a>
+					</li>
+				</c:if>
+			</ul>
 			<form action="${ctxPath}/member/myMenuList" method="get" class="pageMove">
 				<input type="hidden" name="pageNum" value="${page.criteria.pageNum}"/>
 				<input type="hidden" name="amount" value="${page.criteria.amount}"/>
 			</form>
 		</div>
-	
+	</div>
 </div>
 
 
-
-<div class="container mb-3"> 
-
-
-</div>
 
 <script>
 
@@ -118,6 +110,5 @@ $(function(){
 
 
 </script>
-
 
 

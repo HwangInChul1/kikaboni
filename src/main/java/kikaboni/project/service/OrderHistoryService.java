@@ -22,4 +22,7 @@ public interface OrderHistoryService {
 	// 주문 전체 개수
 	int orderTotalCount();
 	
+	// 회원별 주문 개수
+	int MyOrderTotalCount(String memberId);
+	
 }

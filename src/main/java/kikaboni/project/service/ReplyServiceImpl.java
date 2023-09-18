@@ -27,7 +27,7 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public int insert(ReplyVO vo) {
 		boardRepository.updateReplyCnt(vo.getBno(), 1);
-		return replyRepository.insert(vo); // vo를 매개변수로 받아와서 insert 메소드에 대입
+		return replyRepository.insert(vo); 
 	}
 	
 	@Transactional

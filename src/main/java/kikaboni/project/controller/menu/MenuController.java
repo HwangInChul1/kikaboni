@@ -31,58 +31,16 @@ public class MenuController {
 	@Autowired
 	MenuService menuService;
 	
-	//@Autowired
-	//BoardService boardService;
-	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/menuRegister") // 빵 등록 화면으로 이동
+	@GetMapping("/menuRegister") 
 	public void RegisterForm() {
 		
 	}
-	
-//	// 빵 메뉴 조회 
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
-//	@GetMapping("/menuUpdate")
-//	public void UpdateForm(Long mno, Model model) {
-//		
-//		MenuVO get = menuService.breadGet(mno);
-//		model.addAttribute("get", get);
-//		log.info(get);
-//	}
-	
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
-//	@PostMapping("/menuUpdate") // 빵 수정 처리
-//	public String Update(MenuVO vo, RedirectAttributes rttr) {
-//		
-//		menuService.menuUpdate(vo);
-//		
-//		return "redirect:/menu/orderMenu_bread";
-//	}
-//	
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
-//	@PostMapping("/menuDelete") // 빵 삭제 처리
-//	public String Delete(String name, RedirectAttributes rttr) {
-//		
-//		menuService.menuDelete(name);
-//		
-//		return "redirect:/menu/orderMenu_bread";
-//	}
-	
-//	// 빵 메뉴 조회 
-//	@GetMapping("/goodBreadGet")
-//	public String breadGet(Long mno, Model model) {
-//			
-//		MenuVO vo = menuService.breadGet(mno);
-//		model.addAttribute("vo", vo);
-//			
-//		return "menu/breadMenuGet";
-//	}
 		
-		
-	@GetMapping("/orderMenu_bread") // 빵 메뉴 화면으로 이동(이동할떄 mno를 가지고 가야한다?)
+	@GetMapping("/orderMenu_bread") 
 	public String menuBread(Model model, Criteria criteria) {
 		
-		List<MenuVO> list = menuService.breadList(criteria); // 게시물 목록을 가져옴
+		List<MenuVO> list = menuService.breadList(criteria); 
 		log.info(list);
 			
 		for(MenuVO m : list) {
@@ -97,7 +55,7 @@ public class MenuController {
 		return "menu/orderMenu_bread";
 	}
 		
-	@GetMapping("/orderMenu_cake") // 케이크 메뉴 화면으로 이동
+	@GetMapping("/orderMenu_cake") 
 	public String menuCake(Model model, Criteria criteria) {
 		
 		List<MenuVO> list = menuService.cakeList(criteria);
@@ -106,7 +64,7 @@ public class MenuController {
 		return "menu/orderMenu_cake";
 	}
 		
-	@GetMapping("/orderMenu_coffee") // 커피 메뉴 화면으로 이동
+	@GetMapping("/orderMenu_coffee") 
 	public String menuCoffee(Model model, Criteria criteria) {
 		
 		List<MenuVO> list = menuService.coffeeList(criteria);
@@ -115,7 +73,7 @@ public class MenuController {
 		return "menu/orderMenu_coffee";
 	}
 
-	@PostMapping("/breadOrder") // 빵 등록 화면에서 등록하면 주문메뉴로 이동
+	@PostMapping("/breadOrder") 
 	public String menuMove(MenuVO vo, RedirectAttributes rttr){
 			
 		log.info(vo.getAttachList());

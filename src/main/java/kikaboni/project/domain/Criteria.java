@@ -18,7 +18,7 @@ public class Criteria {
 	private int amount; // 페이지당 게시물 수
 	
 	public Criteria() {
-		this(1,10); // All 어노테이션 안주면 에러 남
+		this(1,5); // All 어노테이션 안주면 에러 남
 	}
 	
 	// 몇번부터 몇번까지 게시물 정의할것인지, 마지막 게시물 번호와, 시작 게시물 번호 필요

@@ -83,10 +83,8 @@ public class BoardServiceImpl implements BoardService {
 		boardRepository.insertSelectKey(vo);
 		
 		if(vo.getAttachList() != null && !vo.getAttachList().isEmpty()) {
-			log.info(vo.getAttachList());
 			vo.getAttachList().forEach(attachFile ->{
 				attachFile.setBno(vo.getBno());
-				log.info(vo.getBno());
 				boardAttachRepository.insert(attachFile);
 			});
 		} 
@@ -96,9 +94,10 @@ public class BoardServiceImpl implements BoardService {
 		} else if(vo.getMyTextList() == null || vo.getMyTextList().isEmpty() && vo.getBoard_id() == 1) {
 			BoardKindVO kindvo = new BoardKindVO();
 			kindvo.setBoard_id(1L);
-			kindvo.setBoard_name("빵 추천합니다.");
-			kindvo.setBoard_content("빵 추천 게시판");
+			kindvo.setBoard_name("추천합니다.");
+			kindvo.setBoard_content("빵을 추천하는 게시판");
 			boardKindRepository.insert(kindvo);
+			log.info(kindvo);
 		}
 
 	}
@@ -125,6 +124,7 @@ public class BoardServiceImpl implements BoardService {
 			kindvo.setBoard_name("메뉴 건의합니다.");
 			kindvo.setBoard_content("빵 메뉴를 건의하는 게시판");
 			boardKindRepository.insert(kindvo);
+			log.info(kindvo);
 		}
 
 	}
@@ -147,10 +147,11 @@ public class BoardServiceImpl implements BoardService {
 			return;
 		} else if(vo.getMyTextList() == null || vo.getMyTextList().isEmpty() && vo.getBoard_id()==3) {
 			BoardKindVO kindvo = new BoardKindVO();
-			kindvo.setBoard_id(1L);
+			kindvo.setBoard_id(3L);
 			kindvo.setBoard_name("사장님께 한 마디~");
 			kindvo.setBoard_content("사장님과 대화하는 게시판");
 			boardKindRepository.insert(kindvo);
+			log.info(kindvo);
 		}
 
 	}
@@ -172,13 +173,13 @@ public class BoardServiceImpl implements BoardService {
 		if(vo.getBno() == null || vo.getBno() > 1) {
 			return;
 		} else if(vo.getMyTextList() == null || vo.getMyTextList().isEmpty() && vo.getBoard_id()==4) {
-			BoardKindVO kindvo = new BoardKindVO();
-			kindvo.setBoard_id(4L);
-			kindvo.setBoard_name("이벤트 및 공지사항");
-			kindvo.setBoard_content("이벤트 올리거나, 공지사항 있을 때 올리는 게시판");
-			boardKindRepository.insert(kindvo);
+				BoardKindVO kindvo = new BoardKindVO();
+				kindvo.setBoard_id(4L);
+				kindvo.setBoard_name("이벤트 및 공지사항");
+				kindvo.setBoard_content("이벤트 올리거나, 공지사항 있을 때 올리는 게시판");
+				boardKindRepository.insert(kindvo);
+				log.info(kindvo);
 		}
-
 	}
 	
 	
@@ -398,18 +399,39 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<BoardVO> myMenuTextlist(String memberId, Criteria criteria) {
-		return boardRepository.myTextlist(memberId, criteria);
+		return boardRepository.myMenuTextlist(memberId, criteria);
 	}
 	
 	@Override
 	public List<BoardVO> mytalkTextlist(String memberId, Criteria criteria) {
-		return boardRepository.myTextlist(memberId, criteria);
+		return boardRepository.mytalkTextlist(memberId, criteria);
 	}
 	
 	@Override
 	public List<BoardVO> myeventTextlist(String memberId, Criteria criteria) {
-		return boardRepository.myTextlist(memberId, criteria);
+		return boardRepository.myeventTextlist(memberId, criteria);
 	}
+
+	@Override
+	public int MytotalCount(String memberId) {
+		return boardRepository.MytotalCount(memberId);
+	}
+
+	@Override
+	public int MymenutotalCount(String memberId) {
+		return boardRepository.MymenutotalCount(memberId);
+	}
+
+	@Override
+	public int MytalktotalCount(String memberId) {
+		return boardRepository.MytalktotalCount(memberId);
+	}
+
+	@Override
+	public int MyeventtotalCount(String memberId) {
+		return boardRepository.MyeventtotalCount(memberId);
+	}
+
 
 
 }

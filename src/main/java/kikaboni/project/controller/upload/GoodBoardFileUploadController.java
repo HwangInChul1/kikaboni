@@ -135,28 +135,7 @@ public class GoodBoardFileUploadController {
 		return new ResponseEntity<String>("success",HttpStatus.OK);
 	}
 	
-	// 파일 다운로드
-	@GetMapping("/commend/download")
-	public ResponseEntity<Resource> downloadFile(String fileName){
-		Resource resource = new FileSystemResource("c:/storage/" + fileName);
-		
-		if(!resource.exists()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		String resourceName = resource.getFilename();
-		String resourceOriginName = resourceName.substring(resourceName.indexOf("_")+1);
-		
-		HttpHeaders headers = new HttpHeaders();
-		
-		try {
-			String downloadName = URLEncoder.encode(resourceOriginName,"utf-8");
-			headers.add("content-Disposition","attachment; fileName = " + downloadName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
-	}
+
 	
 	
 	

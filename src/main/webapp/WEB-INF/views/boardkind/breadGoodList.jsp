@@ -103,12 +103,9 @@ $(function() {
 	let pageForm = $('.pageMove');
 	
 	checkModal(result);
-	
-	
-	// 이 문자열을 매개변수로 줘서, 조건문을 통해 조건문데 따라 모달창을 열어주면 되는데, 내용확인하는 함수 생성
-	// 조건을 줘서 각 내용에 따라 modal-body의 내용을 변경, 함수 생성은 function, 변수는 var, let 
+
 	function checkModal(result){
-		if(result == '') return; // result값이(게시판 번호) 없으면 함수 종료
+		if(result == '') return; 
 		if(operation == 'register'){
 			$('.modal-body').html(result + "번을 작성하였습니다.");
 		} else if(operation == 'update'){
@@ -116,7 +113,7 @@ $(function() {
 		} else if(operation == 'delete'){
 			$('.modal-body').html(result + "번을 삭제하였습니다.");
 		}
-		$('.modal').modal('show'); // 모달창 열기
+		$('.modal').modal('show'); 
 	}
 
 	// 게시 글 작성으로 이동
